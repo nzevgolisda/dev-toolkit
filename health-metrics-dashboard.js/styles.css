@@ -1,0 +1,316 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: white;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+}
+
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+.card h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+.input-group input, .input-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus, .input-group select:focus {
+    border-color: #667eea;
+    outline: none;
+}
+
+.radio-group {
+    display: flex;
+    gap: 20px;
+    margin-top: 5px;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.calculate-btn {
+    background: linear-gradient(to right, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.calculate-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.results {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.results h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #f0f0f0;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.result-item {
+    background: #f8f9ff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    border-left: 4px solid #667eea;
+}
+
+.result-item h3 {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.result-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #764ba2;
+}
+
+.result-unit {
+    font-size: 1rem;
+    color: #888;
+    margin-left: 5px;
+}
+
+.bmi-scale {
+    margin-top: 25px;
+}
+
+.bmi-scale h3 {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.scale-container {
+    height: 30px;
+    background: linear-gradient(to right, #2ecc71, #f1c40f, #e74c3c);
+    border-radius: 15px;
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.scale-marker {
+    position: absolute;
+    top: -5px;
+    width: 3px;
+    height: 40px;
+    background: #333;
+    transform: translateX(-50%);
+}
+
+.scale-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.calorie-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+}
+
+.info-box {
+    background: #f8f9ff;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.info-box h3 {
+    color: #667eea;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.activity-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.activity-table th {
+    background: #667eea;
+    color: white;
+    padding: 12px;
+    text-align: left;
+}
+
+.activity-table td {
+    padding: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+.activity-table tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.current-bmi {
+    background: #764ba2;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.daily-tracker {
+    margin-top: 30px;
+    padding-top: 25px;
+    border-top: 2px solid #eee;
+}
+
+.tracker-inputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.tracker-btn {
+    background: #2ecc71;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.tracker-btn:hover {
+    background: #27ae60;
+    transform: scale(1.02);
+}
+
+.tracker-btn.reset {
+    background: #e74c3c;
+}
+
+.tracker-btn.reset:hover {
+    background: #c0392b;
+}
+
+.tracker-results {
+    margin-top: 25px;
+    padding: 20px;
+    background: #f8f9ff;
+    border-radius: 10px;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header h1 {
+        font-size: 2rem;
+    }
+}
+
+.highlight {
+    color: #e74c3c;
+    font-weight: 700;
+}

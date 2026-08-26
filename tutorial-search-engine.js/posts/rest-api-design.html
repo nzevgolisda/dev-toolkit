@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>REST API Design</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>REST API Design Best Practices</h1>
+    
+    <h2>Resource-Based Naming</h2>
+    <p>REST APIs are organized around resources. Use nouns (preferably plural) to represent resources in your URIs, rather than verbs. For example, use <code>/users</code> instead of <code>/getUsers</code> or <code>/createUser</code>. This aligns with the idea that HTTP methods (GET, POST, PUT, DELETE) already define the action to be performed on the resource.</p>
+
+    <h2>Consistent URI Structure</h2>
+    <p>Maintain a consistent and logical hierarchy for your URIs. Nest resources when there's a clear parent-child relationship, but avoid deep nesting that mirrors database joins. For complex relationships, consider exposing them as top-level resources and linking them using query parameters or IDs.</p>
+
+    <h2>Utilize HTTP Methods</h2>
+    <p>Employ standard HTTP methods (GET, POST, PUT, PATCH, DELETE) according to their defined semantics for performing operations on resources.</p>
+    <ul>
+        <li><b>GET:</b> Retrieve a resource or a collection of resources.</li>
+        <li><b>POST:</b> Create a new resource.</li>
+        <li><b>PUT:</b> Update an existing resource (replaces the entire resource).</li>
+        <li><b>PATCH:</b> Partially update an existing resource.</li>
+        <li><b>DELETE:</b> Remove a resource.</li>
+    </ul>
+
+    <h2>Statelessness</h2>
+    <p>Each request from a client to the server must contain all the information needed to process it. The server should not store any client session information between requests. This enhances scalability and reliability.</p>
+
+    <h2>Accept and Respond with JSON</h2>
+    <p>JSON is the standard format for transferring data in modern REST APIs due to its widespread support and ease of use across various technologies.</p>
+
+    <h2>Handle Errors Gracefully</h2>
+    <p>Provide meaningful error responses using standard HTTP status codes to indicate the outcome of a request (e.g., 200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Internal Server Error). Include clear error messages and, optionally, error codes or IDs for easier debugging.</p>
+
+    <h2>Filtering, Sorting, and Pagination</h2>
+    <p>For collections of resources, implement mechanisms for filtering, sorting, and pagination to manage the amount of data returned and improve performance.</p>
+
+    <h2>Security</h2>
+    <p>Implement robust security practices, including using SSL/TLS for secure communication. Enforce the principle of least privilege by adding role checks to ensure users can only access information they are authorized to see.</p>
+
+    <h2>Versioning</h2>
+    <p>Version your APIs from day one to allow for future changes without breaking existing client applications. Common approaches include URI versioning (e.g., <code>/v1/users</code>) or using custom request headers.</p>
+
+    <h2>Caching</h2>
+    <p>Leverage caching to improve performance and reduce server load. Responses can be made cacheable to avoid redundant data retrieval.</p>
+
+    <h2>Documentation</h2>
+    <p>Provide comprehensive and interactive documentation (e.g., using OpenAPI/Swagger) to help developers understand and integrate with your API.</p>
+
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Document each resource and its status codes.</li>
+      <li>Validate request data at the boundary.</li>
+      <li>Return stable error shapes for clients.</li>
+      <li>Protect sensitive routes with least privilege.</li>
+      <li>Test pagination, empty results, and retries.</li>
+    </ul>
+  </div>
+</body>
+</html>

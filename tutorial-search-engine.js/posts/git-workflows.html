@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Git Workflows</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Git Workflows & Best Practices</h1>
+    
+    <h2>Basic Workflow</h2>
+    <pre><code># Clone repository
+git clone https://github.com/user/repo.git
+cd repo
+
+# Create feature branch
+git checkout -b feature/new-feature
+
+# Make changes and commit
+git add .
+git commit -m "Add new feature"
+
+# Push to remote
+git push origin feature/new-feature</code></pre>
+
+    <h2>Branch Management</h2>
+    <pre><code># List all branches
+git branch -a
+
+# Switch to branch
+git checkout main
+
+# Create and switch to new branch
+git checkout -b feature/branch-name
+
+# Delete local branch
+git branch -d branch-name
+
+# Delete remote branch
+git push origin --delete branch-name
+
+# Rename current branch
+git branch -m new-name</code></pre>
+
+    <h2>Committing Changes</h2>
+    <pre><code># Stage specific files
+git add file1.txt file2.txt
+
+# Stage all changes
+git add .
+
+# Stage with interactive mode
+git add -p
+
+# Commit with message
+git commit -m "Descriptive commit message"
+
+# Amend last commit
+git commit --amend -m "Updated message"
+
+# Amend without changing message
+git commit --amend --no-edit</code></pre>
+
+    <h2>Syncing with Remote</h2>
+    <pre><code># Fetch changes from remote
+git fetch origin
+
+# Pull changes (fetch + merge)
+git pull origin main
+
+# Pull with rebase
+git pull --rebase origin main
+
+# Push changes
+git push origin branch-name
+
+# Force push (use carefully!)
+git push --force-with-lease origin branch-name</code></pre>
+
+    <h2>Undoing Changes</h2>
+    <pre><code># Discard unstaged changes
+git checkout -- filename
+
+# Unstage files
+git reset HEAD filename
+
+# Undo last commit (keep changes)
+git reset --soft HEAD~1
+
+# Undo last commit (discard changes)
+git reset --hard HEAD~1
+
+# Revert a commit (creates new commit)
+git revert commit-hash</code></pre>
+
+    <h2>Finding Bugs with Bisect</h2>
+    <pre><code># Start a bisect session
+git bisect start
+
+# Mark the current commit as bad
+git bisect bad
+
+# Mark a known good commit
+git bisect good <commit-hash>
+
+# Git will checkout a commit in the middle.
+# Test the code, then run 'git bisect good' or 'git bisect bad'
+# Repeat until Git identifies the bad commit.
+
+# End the bisect session
+git bisect reset</code></pre>
+
+    <h2>Cherry Picking Commits</h2>
+    <pre><code># Apply a commit from another branch
+git cherry-pick <commit-hash>
+
+# Cherry-pick a range of commits
+git cherry-pick <start-commit-hash>^..<end-commit-hash>
+
+# If there are conflicts, resolve them and continue
+git cherry-pick --continue
+</code></pre>
+
+    <h2>Stashing</h2>
+    <pre><code># Stash current changes
+git stash
+
+# Stash with message
+git stash save "Work in progress on feature X"
+
+# List stashes
+git stash list
+
+# Apply most recent stash
+git stash apply
+
+# Apply and remove stash
+git stash pop
+
+# Apply specific stash
+git stash apply stash@{2}
+
+# Delete stash
+git stash drop stash@{0}</code></pre>
+
+    <h2>Merging & Rebasing</h2>
+    <pre><code># Merge branch into current
+git merge feature-branch
+
+# Abort merge
+git merge --abort
+
+# Rebase current branch
+git rebase main
+
+# Interactive rebase (last 3 commits)
+git rebase -i HEAD~3
+
+# Continue rebase after resolving conflicts
+git rebase --continue
+
+# Abort rebase
+git rebase --abort
+
+# --- Interactive Rebase Commands ---
+# p, pick = use commit
+# r, reword = use commit, but edit the commit message
+# e, edit = use commit, but stop for amending
+# s, squash = use commit, but meld into previous commit
+# f, fixup = like "squash", but discard this commit's log message
+# d, drop = remove commit
+</code></pre>
+
+    <h2>Viewing History</h2>
+    <pre><code># View commit history
+git log
+
+# Compact one-line view
+git log --oneline
+
+# Graph view
+git log --oneline --graph --all
+
+# Show changes in each commit
+git log -p
+
+# Show commits by author
+git log --author="Name"
+
+# Show commits in date range
+git log --since="2 weeks ago"</code></pre>
+
+    <h2>Useful Aliases</h2>
+    <p>Add to your <code>~/.gitconfig</code>:</p>
+    <pre><code>[alias]
+    st = status
+    co = checkout
+    br = branch
+    ci = commit
+    unstage = reset HEAD --
+    last = log -1 HEAD
+    visual = log --oneline --graph --all --decorate
+    amend = commit --amend --no-edit</code></pre>
+
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Write clear, descriptive commit messages</li>
+      <li>Commit early and often with logical changes</li>
+      <li>Always pull before pushing</li>
+      <li>Use branches for features and bug fixes</li>
+      <li>Review changes before committing</li>
+      <li>Never force push to shared branches</li>
+      <li>Keep commits atomic and focused</li>
+    </ul>
+
+    <h2>Workflow Models</h2>
+    <ul>
+        <li><strong>GitFlow:</strong> A robust framework using feature branches, develop, release, hotfix, and main branches. Good for projects with scheduled releases. <a href="https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow" target="_blank">Learn more</a>.</li>
+        <li><strong>GitHub Flow:</strong> A simpler model where `main` is always deployable. Feature branches are created from `main` and merged back after review. Ideal for CI/CD. <a href="https://docs.github.com/en/get-started/quickstart/github-flow" target="_blank">Learn more</a>.</li>
+        <li><strong>Trunk-Based Development:</strong> All developers commit to a single branch (`trunk` or `main`). Feature flags are used to hide incomplete features. Good for experienced teams and rapid iteration. <a href="https://www.atlassian.com/continuous-delivery/continuous-integration/trunk-based-development" target="_blank">Learn more</a>.</li>
+    </ul>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Inspect status and the diff before staging.</li>
+            <li>Keep each commit focused and easy to review.</li>
+            <li>Fetch before comparing work with the remote.</li>
+            <li>Use a branch for changes that are not ready.</li>
+            <li>Write down the recovery command before risky operations.</li>
+        </ul>
+    </div>
+</body>
+</html>

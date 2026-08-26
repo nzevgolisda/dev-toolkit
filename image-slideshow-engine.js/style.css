@@ -1,0 +1,69 @@
+
+:root {
+  --ink: #182523;
+  --muted: #6d7975;
+  --paper: #f5f2eb;
+  --panel: #fffdf8;
+  --line: #d7ddd6;
+  --accent: #c9553c;
+  --shadow: rgba(24, 37, 35, 0.13);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; line-height: 1.5; }
+.topnav {
+  align-items: center;
+  background: var(--panel);
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem clamp(1rem, 5vw, 4rem);
+}
+.topnav a { color: var(--muted); text-decoration: none; }
+.topnav nav { display: flex; gap: 1.5rem; }
+.topnav .brand { color: var(--ink); font-weight: 700; }
+.topnav .active, .topnav a:hover { color: var(--accent); }
+.page-shell { margin: 0 auto; max-width: 1180px; padding: 4rem clamp(1rem, 5vw, 4rem); }
+.intro { max-width: 620px; padding-bottom: 3rem; }
+.eyebrow { color: var(--accent); font: 700 .72rem 'Space Mono', monospace; letter-spacing: .08em; margin: 0 0 .75rem; text-transform: uppercase; }
+.intro h1 { font-size: clamp(2.8rem, 7vw, 6rem); letter-spacing: -.05em; line-height: .95; margin: 0 0 1rem; }
+.intro > p:last-child, .details p:last-child { color: var(--muted); font-size: 1.1rem; max-width: 52ch; }
+.stage { align-items: center; display: flex; gap: 1rem; }
+.slide-frame { background: var(--panel); box-shadow: 12px 12px 0 var(--shadow); margin: 0; min-width: 0; width: 100%; }
+.slide-frame img { aspect-ratio: 3 / 2; background: #e3e6df; display: block; object-fit: cover; width: 100%; }
+.slide-frame figcaption { padding: 1.5rem clamp(1rem, 4vw, 2.5rem) 2rem; }
+.slide-number, .status { color: var(--muted); font: .7rem 'Space Mono', monospace; }
+.slide-frame h2 { font-size: clamp(1.5rem, 3vw, 2.5rem); margin: .65rem 0 .25rem; }
+.slide-frame p { color: var(--muted); margin: 0 0 1rem; }
+.slide-frame strong { color: var(--accent); font: 700 1rem 'Space Mono', monospace; }
+.nav-button, .control-button, .dot, .thumbnail, .icon-button { cursor: pointer; }
+.nav-button, .control-button, .icon-button { transition: background .2s ease, border-color .2s ease, color .2s ease, transform .2s ease; }
+.nav-button { background: var(--panel); border: 1px solid var(--line); color: var(--ink); flex: 0 0 3rem; height: 3rem; font-size: 1.35rem; }
+.nav-button:hover, .control-button:hover, .icon-button:hover { background: var(--accent); border-color: var(--accent); color: white; transform: translateY(-2px); }
+.nav-button:focus-visible, .control-button:focus-visible, .dot:focus-visible, .thumbnail:focus-visible, .icon-button:focus-visible { outline: 3px solid rgba(201, 85, 60, .35); outline-offset: 3px; }
+.gallery-toolbar { align-items: center; display: flex; gap: 1.25rem; justify-content: center; padding: 1.5rem 0; }
+.control-button { background: var(--ink); border: 1px solid var(--ink); color: white; font: 700 .75rem 'Space Mono', monospace; padding: .65rem 1rem; }
+.control-button.secondary { background: transparent; color: var(--ink); }
+.control-button span { display: inline-block; margin-right: .25rem; }
+.dots { display: flex; gap: .45rem; }
+.dot { background: var(--line); border: 0; border-radius: 50%; height: .6rem; padding: 0; width: .6rem; }
+.dot.selected { background: var(--accent); transform: scale(1.25); }
+.thumbnail-row { align-items: center; display: flex; gap: 1rem; }
+.thumbnails { display: grid; flex: 1; gap: .75rem; grid-template-columns: repeat(5, 1fr); }
+.thumbnail { background: var(--panel); border: 2px solid transparent; padding: .25rem; }
+.thumbnail.selected { border-color: var(--accent); }
+.thumbnail img { aspect-ratio: 3 / 2; display: block; object-fit: cover; width: 100%; }
+.icon-button { background: var(--panel); border: 1px solid var(--line); color: var(--ink); flex: 0 0 3rem; font-size: 1.25rem; height: 3rem; }
+.gallery:fullscreen { background: var(--paper); overflow: auto; padding: 3rem 5vw; }
+.details { border-top: 1px solid var(--line); margin-top: 5rem; padding: 3rem 0; }
+.details h2 { font-size: clamp(1.8rem, 4vw, 3rem); margin: 0 0 .5rem; }
+@media (max-width: 600px) {
+  .page-shell { padding-top: 2.5rem; }
+  .stage { gap: .5rem; }
+  .nav-button { flex-basis: 2.4rem; height: 2.4rem; }
+  .gallery-toolbar { flex-wrap: wrap; }
+  .status { text-align: center; width: 100%; }
+  .thumbnail-row { align-items: stretch; flex-direction: column; }
+  .thumbnails { width: 100%; }
+}

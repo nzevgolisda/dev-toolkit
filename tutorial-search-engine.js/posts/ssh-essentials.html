@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SSH Essentials</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>SSH Essentials</h1>
+    
+    <h2>Basic Connection</h2>
+    <pre><code># Connect to server
+ssh user@hostname
+ssh user@192.168.1.100
+
+# Specify port
+ssh -p 2222 user@hostname
+
+# Verbose output (for debugging)
+ssh -v user@hostname
+ssh -vv user@hostname  # More verbose
+ssh -vvv user@hostname  # Maximum verbosity</code></pre>
+
+    <h2>SSH Key Generation</h2>
+    <pre><code># Generate new SSH key pair
+ssh-keygen -t ed25519 -C "your_email@example.com"
+
+# Or using RSA (if ed25519 not supported)
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+# Specify custom filename
+ssh-keygen -t ed25519 -f ~/.ssh/id_ed25519_work
+
+# Generate with no passphrase (not recommended)
+ssh-keygen -t ed25519 -N "" -f ~/.ssh/id_ed25519</code></pre>
+
+    <h2>Copy Public Key to Server</h2>
+    <pre><code># Using ssh-copy-id (easiest)
+ssh-copy-id user@hostname
+ssh-copy-id -i ~/.ssh/id_ed25519.pub user@hostname
+
+# Manual copy
+cat ~/.ssh/id_ed25519.pub | ssh user@hostname "mkdir -p ~/.ssh && cat >> ~/.ssh/authorized_keys"
+
+# Or copy manually and paste
+cat ~/.ssh/id_ed25519.pub
+# Then SSH to server and add to ~/.ssh/authorized_keys</code></pre>
+
+    <h2>SSH Config File</h2>
+    <p>Create/edit <code>~/.ssh/config</code>:</p>
+    <pre><code># Simple host
+Host myserver
+    HostName 192.168.1.100
+    User admin
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519
+
+# Multiple configurations
+Host work
+    HostName work.example.com
+    User john
+    IdentityFile ~/.ssh/id_rsa_work
+    Port 2222
+
+Host github
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_github
+
+# Wildcard for multiple servers
+Host web*
+    User deploy
+    IdentityFile ~/.ssh/id_deploy
+    StrictHostKeyChecking no
+
+# Jump host (bastion)
+Host internal
+    HostName 10.0.0.50
+    User admin
+    ProxyJump bastion
+
+Host bastion
+    HostName bastion.example.com
+    User admin
+
+# Usage: ssh myserver, ssh work, ssh github</code></pre>
+
+    <h2>SSH Config Options</h2>
+    <pre><code>Host example
+    HostName example.com
+    User username
+    Port 22
+    IdentityFile ~/.ssh/id_rsa
+    
+    # Connection settings
+    ConnectTimeout 10
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+    
+    # Security
+    StrictHostKeyChecking yes
+    IdentitiesOnly yes
+    
+    # Forwarding
+    ForwardAgent yes
+    ForwardX11 yes
+    
+    # Compression
+    Compression yes
+    
+    # Keep connection alive
+    TCPKeepAlive yes</code></pre>
+
+    <h2>File Transfer</h2>
+    <h3>SCP (Secure Copy)</h3>
+    <pre><code># Copy file to remote
+scp file.txt user@host:/path/to/destination
+
+# Copy file from remote
+scp user@host:/path/to/file.txt ./
+
+# Copy directory recursively
+scp -r directory/ user@host:/path/
+
+# Copy with specific port
+scp -P 2222 file.txt user@host:/path/
+
+# Copy with compression
+scp -C large_file.tar.gz user@host:/path/</code></pre>
+
+    <h3>SFTP</h3>
+    <pre><code># Connect to SFTP server
+sftp user@hostname
+
+# SFTP commands
+sftp> ls                  # List remote files
+sftp> lls                 # List local files
+sftp> pwd                 # Remote directory
+sftp> lpwd                # Local directory
+sftp> cd /path            # Change remote dir
+sftp> lcd /path           # Change local dir
+sftp> get file.txt        # Download file
+sftp> put file.txt        # Upload file
+sftp> get -r directory/   # Download directory
+sftp> put -r directory/   # Upload directory
+sftp> mkdir newdir        # Create remote directory
+sftp> rm file.txt         # Delete remote file
+sftp> exit                # Quit SFTP</code></pre>
+
+    <h3>Rsync over SSH</h3>
+    <pre><code># Sync directory to remote
+rsync -avz /local/path/ user@host:/remote/path/
+
+# Sync from remote to local
+rsync -avz user@host:/remote/path/ /local/path/
+
+# With progress and delete
+rsync -avz --progress --delete src/ user@host:/dest/
+
+# Exclude files
+rsync -avz --exclude='*.log' src/ user@host:/dest/
+
+# Dry run (test without changes)
+rsync -avz --dry-run src/ user@host:/dest/</code></pre>
+
+    <h2>Port Forwarding</h2>
+    <h3>Local Port Forwarding</h3>
+    <pre><code># Forward local port to remote
+ssh -L 8080:localhost:80 user@host
+# Access remote port 80 via localhost:8080
+
+# Forward to different host through SSH server
+ssh -L 3306:database.internal:3306 user@bastion
+# Access database.internal:3306 via localhost:3306</code></pre>
+
+    <h3>Remote Port Forwarding</h3>
+    <pre><code># Forward remote port to local
+ssh -R 8080:localhost:3000 user@host
+# Remote host can access your localhost:3000 via their localhost:8080</code></pre>
+
+    <h3>Dynamic Port Forwarding (SOCKS Proxy)</h3>
+    <pre><code># Create SOCKS proxy
+ssh -D 8080 user@host
+# Configure browser to use localhost:8080 as SOCKS5 proxy</code></pre>
+
+    <h2>SSH Agent</h2>
+    <pre><code># Start SSH agent
+eval "$(ssh-agent -s)"
+
+# Add key to agent
+ssh-add ~/.ssh/id_ed25519
+ssh-add ~/.ssh/id_rsa_work
+
+# List loaded keys
+ssh-add -l
+
+# Remove key from agent
+ssh-add -d ~/.ssh/id_ed25519
+
+# Remove all keys
+ssh-add -D
+
+# Add with timeout (auto-remove after 1 hour)
+ssh-add -t 3600 ~/.ssh/id_ed25519</code></pre>
+
+    <h2>SSH Server Configuration</h2>
+    <p>Edit <code>/etc/ssh/sshd_config</code>:</p>
+    <pre><code># Port and listening
+Port 22
+ListenAddress 0.0.0.0
+
+# Authentication
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+
+# Security
+AllowUsers user1 user2
+DenyUsers baduser
+AllowGroups sshusers
+
+# Connection settings
+ClientAliveInterval 300
+ClientAliveCountMax 2
+MaxAuthTries 3
+MaxSessions 10
+
+# Subsystem
+Subsystem sftp /usr/lib/openssh/sftp-server
+
+# After changes, restart SSH
+sudo systemctl restart sshd</code></pre>
+
+    <h2>Security Best Practices</h2>
+    <pre><code># Change default port
+Port 2222
+
+# Disable root login
+PermitRootLogin no
+
+# Disable password authentication (use keys only)
+PasswordAuthentication no
+ChallengeResponseAuthentication no
+
+# Use strong ciphers
+Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
+
+# Limit user access
+AllowUsers deploy admin
+
+# Use fail2ban to prevent brute force
+sudo apt install fail2ban
+sudo systemctl enable fail2ban
+sudo systemctl start fail2ban</code></pre>
+
+    <h2>Troubleshooting</h2>
+    <pre><code># Test connection with verbose output
+ssh -vvv user@host
+
+# Check SSH service status
+sudo systemctl status sshd
+
+# View SSH logs
+sudo tail -f /var/log/auth.log  # Ubuntu/Debian
+sudo tail -f /var/log/secure    # RHEL/CentOS
+
+# Test SSH key
+ssh-keygen -l -f ~/.ssh/id_ed25519
+ssh-keygen -l -f ~/.ssh/id_ed25519.pub
+
+# Check file permissions (important!)
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub
+chmod 600 ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/config
+
+# Verify authorized_keys on server
+cat ~/.ssh/authorized_keys
+
+# Test SSH from server to itself
+ssh localhost</code></pre>
+
+    <h2>Common Use Cases</h2>
+    <h3>Jump Through Bastion</h3>
+    <pre><code># One-liner
+ssh -J bastion-user@bastion.example.com user@internal-server
+
+# Or in config
+Host internal
+    HostName 10.0.0.100
+    User admin
+    ProxyJump bastion
+
+Host bastion
+    HostName bastion.example.com
+    User bastion-user</code></pre>
+
+    <h3>Remote Development with VS Code</h3>
+    <p>Visual Studio Code's "Remote - SSH" extension allows you to use a remote machine as your full-featured development environment.</p>
+    <ol>
+        <li>Install the <a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh" target="_blank">Remote - SSH</a> extension in VS Code.</li>
+        <li>Open the command palette (Ctrl+Shift+P) and select "Remote-SSH: Connect to Host...".</li>
+        <li>Enter your SSH connection string (e.g., `user@hostname`) or select a host from your `~/.ssh/config` file.</li>
+        <li>VS Code will open a new window connected to the remote machine, where you can edit files, use the terminal, and debug as if you were working locally.</li>
+    </ol>
+
+    <h3>Persistent Connection</h3>
+    <pre><code># In ~/.ssh/config
+Host *
+    ControlMaster auto
+    ControlPath ~/.ssh/sockets/%r@%h-%p
+    ControlPersist 600
+
+# Create socket directory
+mkdir -p ~/.ssh/sockets</code></pre>
+
+    <h3>Execute Remote Command</h3>
+    <pre><code># Single command
+ssh user@host "ls -la"
+
+# Multiple commands
+ssh user@host "cd /var/log && tail -n 20 syslog"
+
+# With sudo
+ssh user@host "sudo systemctl restart nginx"
+
+# Redirect output to local file
+ssh user@host "cat /var/log/app.log" > local_app.log</code></pre>
+
+    <h2>Useful Aliases</h2>
+    <p>Add to <code>~/.bashrc</code> or <code>~/.zshrc</code>:</p>
+    <pre><code># Quick SSH connections
+alias ssh-work='ssh work'
+alias ssh-prod='ssh production'
+
+# SSH with specific key
+alias ssh-github='ssh -i ~/.ssh/id_ed25519_github git@github.com'
+
+# Copy SSH key to clipboard (Linux)
+alias sshcopy='cat ~/.ssh/id_ed25519.pub | xclip -selection clipboard'
+
+# Copy SSH key to clipboard (Mac)
+alias sshcopy='cat ~/.ssh/id_ed25519.pub | pbcopy'
+
+# Copy SSH key to clipboard (Windows/WSL)
+alias sshcopy='cat ~/.ssh/id_ed25519.pub | clip.exe'</code></pre>
+
+    <h2>Quick Reference</h2>
+    <ul>
+      <li><code>ssh user@host</code> - Basic connection</li>
+      <li><code>ssh-keygen -t ed25519</code> - Generate key pair</li>
+      <li><code>ssh-copy-id user@host</code> - Copy public key</li>
+      <li><code>scp file user@host:/path</code> - Copy file</li>
+      <li><code>ssh -L 8080:localhost:80 user@host</code> - Local port forward</li>
+      <li><code>ssh -D 8080 user@host</code> - SOCKS proxy</li>
+      <li><code>~/.ssh/config</code> - SSH client configuration</li>
+      <li><code>/etc/ssh/sshd_config</code> - SSH server configuration</li>
+    </ul>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Use keys instead of password-only authentication.</li>
+            <li>Protect private keys with a passphrase.</li>
+            <li>Verify host fingerprints on first connection.</li>
+            <li>Restrict forwarding and login permissions.</li>
+            <li>Review authentication logs after changes.</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,94 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage{sourcesanspro}
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage[margin=1.45cm,top=1.2cm,bottom=1.2cm]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage[colorlinks=true,linkcolor=accent,urlcolor=accent,breaklinks=true,pdfnewwindow=true]{hyperref}
+
+\definecolor{ink}{HTML}{172A3A}
+\definecolor{accent}{HTML}{E76F51}
+\definecolor{muted}{HTML}{5D6B75}
+\definecolor{paper}{HTML}{F4F6F7}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\emergencystretch=1.5em
+\pagestyle{empty}
+\setlist[itemize]{leftmargin=1.15em,itemsep=0pt,topsep=1pt,parsep=0pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\urlstyle{same}
+
+\newcommand{\sectiontitle}[1]{%
+    \vspace{0.46em}%
+    {\color{accent}\rule{0.08\textwidth}{1.4pt}}\hspace{0.55em}%
+    {\small\bfseries\color{ink}\MakeUppercase{#1}}\par
+    \vspace{0.22em}
+}
+\newcommand{\cvrow}[2]{%
+    {\small\bfseries\color{accent}#1}\par
+    {\small\color{ink}#2}\par\vspace{0.1em}
+}
+\newcommand{\entry}[4]{%
+    {\small\bfseries\color{accent}#1}\par
+    {\bfseries\color{ink}#2}\par
+    {\small\color{muted}#3, #4}\par\vspace{0.1em}
+}
+
+\begin{document}
+
+\noindent\colorbox{ink}{%
+    \parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+        \vspace{0.15em}
+        {\fontsize{27}{30}\selectfont\bfseries\color{white}Nikos Zevgolis}\par
+        \vspace{2pt}
+        {\large\color{accent}Mathematician \textbar\ Junior Backend Developer}\par
+        \vspace{7pt}
+        \begin{tabularx}{\linewidth}{@{}Y Y@{}}
+            {\footnotesize\color{white}\faMapMarker\hspace{0.35em}Athens, Nea Erythrea} &
+            {\footnotesize\color{white}\href{tel:+306942571752}{\textcolor{white}{\faPhone\hspace{0.35em}(+30) 6942571752}}}\\
+        \end{tabularx}\par\vspace{3pt}
+        \parbox{\linewidth}{\footnotesize\color{white}\textbf{NAV}\hspace{0.8em}\href{https://nzevgolisda.github.io/}{\textcolor{white}{Portfolio}}\hspace{1.1em}\href{https://github.com/nzevgolisda}{\textcolor{white}{GitHub}}\hspace{1.1em}\href{https://www.linkedin.com/in/nikos-zevgolis-2193871b7/}{\textcolor{white}{LinkedIn}}\hspace{1.1em}\href{mailto:nzevgolisda@gmail.com}{\textcolor{white}{Email}}}
+        \vspace{0.45em}
+    }%
+}\par
+
+\sectiontitle{Profile}
+Passionate mathematics graduate with a strong analytical background and a deep interest in data science and software development. Proficient in Python, JavaScript, and SQL, with experience in individual and collaborative web projects. Seeking to apply mathematical reasoning and technical expertise to build robust applications and deliver data-driven insights. Portfolio: \href{https://nzevgolisda.github.io/}{nzevgolisda.github.io}.
+
+\sectiontitle{Technical Skills}
+\cvrow{Programming}{Python (pandas, NumPy, Matplotlib, Seaborn), JavaScript (ES6), HTML5, CSS, SQL}
+\cvrow{Analytics}{Data cleaning, exploratory data analysis, statistical modelling, dashboards, advanced Excel, Tableau}
+\cvrow{Tools}{Linux (Ubuntu), Windows, WSL, Git, VS Code, Jupyter Notebook, MySQL, PostgreSQL, MATLAB, \LaTeX}
+\cvrow{Platforms}{Power BI, Microsoft Office, LibreOffice, Tableau, GitHub}
+
+\sectiontitle{Experience}
+\entry{2012--2021}{Math Tutor}{Self-employed}{Athens, Greece}
+\begin{itemize}
+    \item Provided personalised tutoring to university and senior high school students across a broad range of mathematical disciplines.
+    \item Covered Calculus, Analysis, Differential Equations, Linear Algebra, Probability and Statistics, Geometry, and Python programming.
+    \item Designed customised lesson plans and problem-solving strategies, supporting exam preparation and project work.
+\end{itemize}
+
+\sectiontitle{Selected Projects}
+\cvrow{Portfolio}{\href{https://nzevgolisda.github.io/}{nzevgolisda.github.io}: personal data science portfolio built with Python, JavaScript, SQL, HTML5/CSS, and Git.}
+\cvrow{Web Application}{\href{https://github.com/nzevgolisda/tox.gr-frontend}{tox.gr-frontend}: frontend for an instant-messaging web app with social-media and forum features.}
+\cvrow{Scientific Tools}{\href{https://github.com/nzevgolisda/science-tools}{science-tools}: reusable Python and JavaScript modules for numerical calculus, physics simulations, algebra, geometry, and grid computations.}
+\cvrow{More Repositories}{\href{https://github.com/nzevgolisda/Games}{Games} (games) \textbullet\ \href{https://github.com/nzevgolisda/slides.js}{slides.js} (presentations) \textbullet\ \href{https://github.com/nzevgolisda/spreadsheets}{spreadsheets} (Python/Excel).}
+
+\sectiontitle{Education}
+\entry{2010--2021}{BSc in Theoretical Mathematics (pending)}{University of Crete}{Greece}
+Specialisation in Differential Equations, Computational Mathematics, Geometry, and Probability Theory. Relevant coursework includes Real Analysis, Abstract Algebra, Topology, Numerical Methods, and Mathematical Statistics. Thesis ongoing: dynamical systems and numerical simulations.
+
+\sectiontitle{Languages and Additional Information}
+\cvrow{Greek}{Native}
+\cvrow{English}{B2 Certificate; fluent written and spoken communication}
+\cvrow{French}{A2 Certificate; basic conversational skills}
+\cvrow{Interests}{Basketball, Chess, Music, Problem Solving}\vspace{0.1em}
+\cvrow{Military Status}{Fulfilled}
+
+\end{document}

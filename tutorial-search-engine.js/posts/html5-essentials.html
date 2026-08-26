@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>HTML5 Essentials</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>HTML5 Essentials</h1>
+    <p class="post-meta">Semantic structure, forms, and accessible browser features.</p>
+
+    <h2>Document Structure</h2>
+    <pre><code>&lt;!doctype html&gt;
+&lt;html lang="en"&gt;
+  &lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;Project dashboard&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;header&gt;Project dashboard&lt;/header&gt;
+    &lt;main&gt;&lt;h1&gt;Recent activity&lt;/h1&gt;&lt;/main&gt;
+    &lt;footer&gt;Updated today&lt;/footer&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+
+    <h2>Semantic Landmarks</h2>
+    <p>Use elements for meaning, not appearance. This gives browsers, assistive technology, and search engines a useful page outline.</p>
+    <ul>
+      <li><code>header</code> introduces a page or section.</li>
+      <li><code>nav</code> groups major navigation links.</li>
+      <li><code>main</code> contains the page's unique content.</li>
+      <li><code>section</code> groups a topic with its own heading.</li>
+      <li><code>article</code> represents independent, reusable content.</li>
+      <li><code>footer</code> contains closing information and related links.</li>
+    </ul>
+
+    <h2>Accessible Forms</h2>
+    <pre><code>&lt;form&gt;
+  &lt;label for="email"&gt;Email address&lt;/label&gt;
+  &lt;input id="email" name="email" type="email" required&gt;
+  &lt;button type="submit"&gt;Subscribe&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+    <p>Every control needs a label. Use the input type that matches the data, keep the submit action explicit, and validate on the server as well as in the browser.</p>
+
+    <h2>Useful Native Elements</h2>
+    <ul>
+      <li>Use <code>details</code> and <code>summary</code> for expandable content.</li>
+      <li>Use <code>time datetime="2026-08-26"</code> for machine-readable dates.</li>
+      <li>Use <code>figure</code> and <code>figcaption</code> for labelled media.</li>
+      <li>Use <code>dialog</code> for modal interactions that need focus management.</li>
+    </ul>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Give the document one clear main heading.</li>
+      <li>Navigate the page with only the keyboard.</li>
+      <li>Associate every form control with a label.</li>
+      <li>Test content at a narrow viewport.</li>
+      <li>Validate the final document before publishing.</li>
+    </ul>
+  </div>
+</body>
+</html>

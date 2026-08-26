@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Quick commands</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Quick Command Snippets</h1>
+    
+    <h2>File Operations</h2>
+    <pre><code># Find files by name
+find . -name "*.py"
+
+# Find files modified in last 7 days
+find . -type f -mtime -7
+
+# Find and delete files
+find . -name "*.tmp" -delete
+
+# Count files in directory
+ls -1 | wc -l
+
+# Disk usage of directory
+du -sh /path/to/directory
+
+# Sort files by size
+ls -lhS
+
+# Copy with progress
+rsync -avh --progress source/ dest/</code></pre>
+
+    <h2>Text Processing</h2>
+    <pre><code># Search in files
+grep -r "search term" .
+
+# Search with line numbers
+grep -rn "search term" .
+
+# Count occurrences
+grep -c "pattern" file.txt
+
+# Replace text in file
+sed -i 's/old/new/g' file.txt
+
+# Replace in multiple files
+find . -name "*.txt" -exec sed -i 's/old/new/g' {} +
+
+# Print specific columns
+awk '{print $1, $3}' file.txt
+
+# Remove duplicate lines
+sort file.txt | uniq</code></pre>
+
+    <h2>Network</h2>
+    <pre><code># Check if port is open
+nc -zv hostname 80
+
+# Download file
+wget https://example.com/file.zip
+curl -O https://example.com/file.zip
+
+# Check open ports
+sudo netstat -tulpn
+sudo ss -tulpn
+
+# Test DNS
+nslookup example.com
+dig example.com
+
+# Check connectivity
+ping -c 4 google.com
+
+# Trace route
+traceroute google.com</code></pre>
+
+    <h2>Working with APIs (curl & jq)</h2>
+    <pre><code># Pretty-print JSON from an API
+curl -s "https://api.github.com/users/google" | jq
+
+# Extract specific fields from JSON
+curl -s "https://api.github.com/users/google/repos" | jq '.[].name'
+
+# Post JSON data
+curl -X POST -H "Content-Type: application/json" -d '{"key": "value"}' https://httpbin.org/post
+
+# Use authentication token
+curl -H "Authorization: Bearer YOUR_TOKEN" https://api.example.com/data
+
+# Follow redirects
+curl -L https://example.com</code></pre>
+
+
+    <h2>Archives</h2>
+    <pre><code># Create tar.gz
+tar -czf archive.tar.gz directory/
+
+# Extract tar.gz
+tar -xzf archive.tar.gz
+
+# Create zip
+zip -r archive.zip directory/
+
+# Extract zip
+unzip archive.zip
+
+# List archive contents
+tar -tzf archive.tar.gz
+unzip -l archive.zip</code></pre>
+
+    <h2>System Monitoring</h2>
+    <pre><code># Monitor system resources
+htop
+top
+
+# Check memory
+free -h
+
+# Check disk space
+df -h
+
+# Monitor disk I/O
+iotop
+
+# Network usage
+iftop
+
+# Process info
+ps aux | grep process_name</code></pre>
+
+    <h2>Git Shortcuts</h2>
+    <pre><code># Quick commit
+git add . && git commit -m "message" && git push
+
+# Undo last commit (keep changes)
+git reset --soft HEAD~1
+
+# Discard local changes
+git checkout -- .
+
+# View commit history
+git log --oneline --graph --all
+
+# Create and switch to branch
+git checkout -b new-branch
+
+# Delete merged branches
+git branch --merged | grep -v "\*" | xargs -n 1 git branch -d</code></pre>
+
+    <h2>Permissions</h2>
+    <pre><code># Make file executable
+chmod +x script.sh
+
+# Change ownership
+sudo chown user:group file.txt
+
+# Recursive permissions
+chmod -R 755 directory/
+
+# Find files with specific permissions
+find . -perm 777</code></pre>
+
+    <h2>One-Liners</h2>
+    <pre><code># Kill process on port
+sudo kill -9 $(sudo lsof -t -i:8080)
+
+# Generate random password
+openssl rand -base64 32
+
+# Get public IP
+curl ifconfig.me
+
+# Create directory and cd into it
+mkdir new_dir && cd new_dir
+
+# Monitor file changes
+watch -n 1 'ls -lh file.txt'
+
+# Empty file without deleting
+truncate -s 0 file.txt</code></pre>
+
+    <h2>Docker and kubectl</h2>
+    <pre><code># List running containers
+docker ps
+
+# List all containers
+docker ps -a
+
+# Stop a container
+docker stop <container_id>
+
+# Remove a container
+docker rm <container_id>
+
+# View logs of a container
+docker logs -f <container_id>
+
+# List Kubernetes pods
+kubectl get pods
+
+# Describe a pod
+kubectl describe pod <pod_name>
+
+# Get logs from a pod
+kubectl logs -f <pod_name>
+
+# Port-forward to a pod
+kubectl port-forward <pod_name> 8080:80</code></pre>
+
+    <h2>Job Control</h2>
+    <pre><code># Start a job in the background
+command &
+
+# List background jobs
+jobs
+
+# Bring a job to the foreground
+fg %1
+
+# Send a job to the background
+bg %1
+
+# Stop a foreground job (Ctrl+Z) and then send it to the background
+# (press Ctrl+Z)
+bg</code></pre>
+
+    <h2>More find examples</h2>
+    <pre><code># Find files with multiple extensions
+find . -type f \( -name "*.js" -o -name "*.html" \)
+
+# Find files larger than 10MB
+find . -type f -size +10M
+
+# Execute a command on found files
+find . -name "*.log" -exec gzip {} \;
+
+# Find empty files or directories
+find . -empty</code></pre>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Confirm the command target before running it.</li>
+            <li>Read help output for unfamiliar flags.</li>
+            <li>Pipe output only when the format is stable.</li>
+            <li>Save destructive commands for reviewed scripts.</li>
+            <li>Keep frequently used commands in project notes.</li>
+        </ul>
+    </div>
+</body>
+</html>

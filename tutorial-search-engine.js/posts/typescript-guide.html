@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TypeScript Guide</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>TypeScript Guide</h1>
+    
+    <h2>Setup</h2>
+    <pre><code># Install TypeScript
+npm install -g typescript
+
+# Initialize project
+npm init -y
+npm install --save-dev typescript @types/node
+
+# Create tsconfig.json
+tsc --init
+
+# Compile
+tsc
+
+# Watch mode
+tsc --watch</code></pre>
+
+    <h2>Basic Types</h2>
+    <pre><code>// Primitives
+let isDone: boolean = false;
+let count: number = 42;
+let name: string = "Alice";
+
+// Arrays
+let numbers: number[] = [1, 2, 3];
+let names: Array<string> = ["Alice", "Bob"];
+
+// Tuples
+let tuple: [string, number] = ["age", 30];
+
+// Any (avoid when possible)
+let anything: any = "hello";
+
+// Unknown (safer than any)
+let uncertain: unknown = 4;
+if (typeof uncertain === "number") {
+  console.log(uncertain + 1);
+}
+
+// Void
+function log(message: string): void {
+  console.log(message);
+}
+
+// Never (functions that never return)
+function error(message: string): never {
+  throw new Error(message);
+}</code></pre>
+
+    <h2>Interfaces</h2>
+    <pre><code>// Basic interface
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  age?: number;  // Optional property
+  readonly created: Date;  // Readonly
+}
+
+const user: User = {
+  id: 1,
+  name: "Alice",
+  email: "alice@example.com",
+  created: new Date()
+};
+
+// Extending interfaces
+interface Admin extends User {
+  role: string;
+  permissions: string[];
+}
+
+// Function types
+interface SearchFunc {
+  (source: string, subString: string): boolean;
+}
+
+const search: SearchFunc = (src, sub) => {
+  return src.indexOf(sub) > -1;
+};</code></pre>
+
+    <h2>Type Aliases</h2>
+    <pre><code>// Basic type alias
+type ID = string | number;
+
+// Object type
+type User = {
+  id: ID;
+  name: string;
+  email: string;
+};
+
+// Union types
+type Status = "pending" | "active" | "inactive";
+
+// Intersection types
+type Employee = User & {
+  employeeId: number;
+  department: string;
+};
+
+// Function type
+type Callback = (data: string) => void;</code></pre>
+
+    <h2>Generics</h2>
+    <pre><code>// Generic function
+function identity<T>(arg: T): T {
+  return arg;
+}
+
+let output = identity<string>("hello");
+
+// Generic interface
+interface GenericIdentityFn<T> {
+  (arg: T): T;
+}
+
+// Generic class
+class GenericNumber<T> {
+  zeroValue: T;
+  add: (x: T, y: T) => T;
+}
+
+// Generic constraints
+interface Lengthwise {
+  length: number;
+}
+
+function logLength<T extends Lengthwise>(arg: T): T {
+  console.log(arg.length);
+  return arg;
+}
+
+// Multiple type parameters
+function merge<T, U>(obj1: T, obj2: U): T & U {
+  return { ...obj1, ...obj2 };
+}</code></pre>
+
+    <h2>Classes</h2>
+    <pre><code>class Animal {
+  private name: string;
+  protected age: number;
+  public species: string;
+
+  constructor(name: string, age: number, species: string) {
+    this.name = name;
+    this.age = age;
+    this.species = species;
+  }
+
+  // Getter
+  get getName(): string {
+    return this.name;
+  }
+
+  // Setter
+  set setAge(age: number) {
+    if (age > 0) {
+      this.age = age;
+    }
+  }
+
+  // Method
+  makeSound(): void {
+    console.log(`${this.name} makes a sound`);
+  }
+}
+
+// Inheritance
+class Dog extends Animal {
+  breed: string;
+
+  constructor(name: string, age: number, breed: string) {
+    super(name, age, "Canine");
+    this.breed = breed;
+  }
+
+  makeSound(): void {
+    console.log(`${this.getName} barks`);
+  }
+}
+
+// Abstract class
+abstract class Shape {
+  abstract getArea(): number;
+
+  printArea(): void {
+    console.log(`Area: ${this.getArea()}`);
+  }
+}</code></pre>
+
+    <h2>Decorators (Experimental)</h2>
+    <p>Decorators are a special kind of declaration that can be attached to a class declaration, method, accessor, property, or parameter. You need to enable <code>experimentalDecorators</code> in <code>tsconfig.json</code>.</p>
+    <pre><code>// Class decorator
+function sealed(constructor: Function) {
+  Object.seal(constructor);
+  Object.seal(constructor.prototype);
+}
+
+@sealed
+class Greeter {
+  greeting: string;
+  constructor(message: string) {
+    this.greeting = message;
+  }
+  greet() {
+    return "Hello, " + this.greeting;
+  }
+}
+
+// Method decorator
+function log(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+    const originalMethod = descriptor.value;
+    descriptor.value = function (...args: any[]) {
+        console.log(`Calling ${propertyKey} with`, args);
+        const result = originalMethod.apply(this, args);
+        console.log(`Result:`, result);
+        return result;
+    };
+}
+
+class Calculator {
+    @log
+    add(a: number, b: number): number {
+        return a + b;
+    }
+}
+</code></pre>
+
+    <h2>Utility Types</h2>
+    <pre><code>interface User {
+  id: number;
+  name: string;
+  email: string;
+  age: number;
+}
+
+// Partial - all properties optional
+type PartialUser = Partial<User>;
+
+// Required - all properties required
+type RequiredUser = Required<PartialUser>;
+
+// Readonly - all properties readonly
+type ReadonlyUser = Readonly<User>;
+
+// Pick - select specific properties
+type UserPreview = Pick<User, "id" | "name">;
+
+// Omit - exclude specific properties
+type UserWithoutEmail = Omit<User, "email">;
+
+// Record - create type with specific keys
+type UserRoles = Record<"admin" | "user" | "guest", User>;
+
+// ReturnType - get function return type
+function getUser() {
+  return { id: 1, name: "Alice" };
+}
+type UserReturn = ReturnType<typeof getUser>;</code></pre>
+
+    <h2>Type Guards</h2>
+    <pre><code>// typeof guard
+function padLeft(value: string, padding: string | number) {
+  if (typeof padding === "number") {
+    return " ".repeat(padding) + value;
+  }
+  return padding + value;
+}
+
+// instanceof guard
+class Bird {
+  fly() { console.log("Flying"); }
+}
+class Fish {
+  swim() { console.log("Swimming"); }
+}
+
+function move(animal: Bird | Fish) {
+  if (animal instanceof Bird) {
+    animal.fly();
+  } else {
+    animal.swim();
+  }
+}
+
+// Custom type guard
+interface Cat {
+  meow: () => void;
+}
+interface Dog {
+  bark: () => void;
+}
+
+function isCat(pet: Cat | Dog): pet is Cat {
+  return (pet as Cat).meow !== undefined;
+}
+
+function makeSound(pet: Cat | Dog) {
+  if (isCat(pet)) {
+    pet.meow();
+  } else {
+    pet.bark();
+  }
+}</code></pre>
+
+    <h2>Enums</h2>
+    <pre><code>// Numeric enum
+enum Direction {
+  Up = 1,
+  Down,
+  Left,
+  Right
+}
+
+let dir: Direction = Direction.Up;
+
+// String enum
+enum Color {
+  Red = "RED",
+  Green = "GREEN",
+  Blue = "BLUE"
+}
+
+// Const enum (inlined at compile time)
+const enum HttpStatus {
+  OK = 200,
+  BadRequest = 400,
+  Unauthorized = 401
+}</code></pre>
+
+    <h2>Advanced Types</h2>
+    <pre><code>// Conditional types
+type IsString<T> = T extends string ? true : false;
+
+// Mapped types
+type Optional<T> = {
+  [P in keyof T]?: T[P];
+};
+
+// Template literal types
+type EventName<T extends string> = `${T}Changed`;
+type UserEvent = EventName<"user">; // "userChanged"
+
+// Infer keyword
+type UnpackPromise<T> = T extends Promise<infer U> ? U : T;
+type Result = UnpackPromise<Promise<number>>; // number</code></pre>
+
+    <h2>tsconfig.json Essentials</h2>
+    <pre><code>{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true, // Enable decorators
+    "emitDecoratorMetadata": true   // For frameworks like TypeORM or NestJS
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}</code></pre>
+
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Enable strict mode in tsconfig.json</li>
+      <li>Use interfaces for objects, type aliases for unions/primitives</li>
+      <li>Avoid using <code>any</code>, use <code>unknown</code> instead</li>
+      <li>Prefer <code>const</code> assertions for literal types</li>
+      <li>Use type guards for narrowing</li>
+      <li>Leverage utility types instead of creating manual types</li>
+      <li>Use <code>readonly</code> for immutable data</li>
+      <li>Define explicit return types for public functions</li>
+    </ul>
+
+    <h2>Safe API Data</h2>
+    <p>Keep external data unknown until a small type guard proves its shape.</p>
+    <pre><code>interface UserResponse {
+  id: number;
+  name: string;
+}
+
+function isUserResponse(value: unknown): value is UserResponse {
+  if (typeof value !== "object" || value === null) return false;
+  const user = value as Record&lt;string, unknown&gt;;
+  return typeof user.id === "number" &amp;&amp; typeof user.name === "string";
+}
+
+async function getUser(id: number): Promise&lt;UserResponse&gt; {
+  const response = await fetch(`/api/users/${id}`);
+  const data: unknown = await response.json();
+
+  if (!response.ok || !isUserResponse(data)) {
+    throw new Error("Unexpected user response");
+  }
+  return data;
+}
+
+getUser(42)
+  .then(user =&gt; console.log(user.name))
+  .catch(error =&gt; console.error(error));</code></pre>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Turn on strict checking before adding abstractions.</li>
+      <li>Model external values as <code>unknown</code>.</li>
+      <li>Let the compiler expose unsafe assumptions.</li>
+      <li>Prefer small type guards over broad assertions.</li>
+      <li>Keep generated output out of source control.</li>
+    </ul>
+  </div>
+</body>
+</html>

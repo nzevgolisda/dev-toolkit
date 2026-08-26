@@ -1,0 +1,55 @@
+{
+  "categories": [
+    {
+      "name": "Programming",
+      "items": [
+        { "title": "Python tips", "url": "posts/python-tips.html", "excerpt": "Small Python productivity patterns." },
+        { "title": "Git workflows", "url": "posts/git-workflows.html", "excerpt": "Common Git commands and workflows." },
+        { "title": "JavaScript essentials", "url": "posts/javascript-essentials.html", "excerpt": "Modern JS patterns and best practices." },
+        { "title": "TypeScript guide", "url": "posts/typescript-guide.html", "excerpt": "Type-safe JavaScript development." },
+        { "title": "HTML5 essentials", "url": "posts/html5-essentials.html", "excerpt": "Semantic structure and accessible web markup." },
+        { "title": "CSS layout patterns", "url": "posts/css-layout-patterns.html", "excerpt": "Build resilient layouts with grid and flexbox." },
+        { "title": "REST API design", "url": "posts/rest-api-design.html", "excerpt": "Best practices for API development." }
+      ]
+    },
+    {
+      "name": "Linux",
+      "items": [
+        { "title": "Init & service tips", "url": "posts/linux-services.html", "excerpt": "Managing services and logs." },
+        { "title": "Bash scripting", "url": "posts/bash-scripting.html", "excerpt": "Writing effective shell scripts." },
+        { "title": "File permissions", "url": "posts/linux-permissions.html", "excerpt": "Understanding chmod, chown, and ACLs." },
+        { "title": "SSH essentials", "url": "posts/ssh-essentials.html", "excerpt": "Secure shell configuration and usage." },
+        { "title": "Package management", "url": "posts/package-management.html", "excerpt": "apt, yum, and package managers." }
+      ]
+    },
+    {
+      "name": "WSL",
+      "items": [
+        { "title": "WSL setup", "url": "posts/wsl-setup.html", "excerpt": "Fast start guide for WSL2." },
+        { "title": "Windows integration", "url": "posts/wsl-integration.html", "excerpt": "Seamless Windows-Linux workflows." },
+        { "title": "WSL performance", "url": "posts/wsl-performance.html", "excerpt": "Optimize WSL2 for development." }
+      ]
+    },
+    {
+      "name": "DevOps",
+      "items": [
+        { "title": "Docker cheatsheet", "url": "posts/docker-cheatsheet.html", "excerpt": "Container management commands." },
+        { "title": "GitHub Actions basics", "url": "posts/github-actions-basics.html", "excerpt": "Automate tests and deployments with workflows." }
+      ]
+    },
+    {
+      "name": "Tools",
+      "items": [
+        { "title": "Quick commands", "url": "posts/commands.html", "excerpt": "Grab-and-go command snippets." },
+        { "title": "VS Code shortcuts", "url": "posts/vscode-shortcuts.html", "excerpt": "Productivity keyboard shortcuts." },
+        { "title": "GitKraken guide", "url": "posts/gitkraken-guide.html", "excerpt": "Visual Git workflows with GitKraken." }
+      ]
+    },
+    {
+      "name": "Database",
+      "items": [
+        { "title": "SQL essentials", "url": "posts/sql-essentials.html", "excerpt": "Query, join, and update relational data." }
+      ]
+    }
+  ]
+}

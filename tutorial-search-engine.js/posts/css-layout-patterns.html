@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>CSS Layout Patterns</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>CSS Layout Patterns</h1>
+    <p class="post-meta">Practical grid, flexbox, spacing, and responsive layout patterns.</p>
+
+    <h2>Start With a Container</h2>
+    <pre><code>.container {
+  width: min(100% - 2rem, 70rem);
+  margin-inline: auto;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}</code></pre>
+    <p>Use a readable maximum width and let content shrink inside the viewport. This avoids fixed widths that create horizontal scrolling on small screens.</p>
+
+    <h2>Flexbox for One Dimension</h2>
+    <pre><code>.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: .5rem;
+}</code></pre>
+    <p>Flexbox is ideal when items flow mainly in a row or column. Use <code>gap</code> for consistent spacing instead of margins between siblings.</p>
+
+    <h2>Grid for Page Structure</h2>
+    <pre><code>.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+  min-height: 100vh;
+}
+
+@media (max-width: 40rem) {
+  .dashboard { grid-template-columns: 1fr; }
+}</code></pre>
+    <p>Use grid when rows and columns matter together. <code>auto-fit</code> lets cards wrap without needing a breakpoint for every screen size.</p>
+
+    <h2>Responsive Rules</h2>
+    <ul>
+      <li>Prefer fluid widths, <code>min()</code>, and <code>max()</code> before adding breakpoints.</li>
+      <li>Keep touch targets large enough to activate comfortably.</li>
+      <li>Test long labels and narrow screens, not only ideal content.</li>
+      <li>Use media queries to change layout, not to repair overflow.</li>
+      <li>Check keyboard focus after changing visual order.</li>
+    </ul>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Test layouts with realistic long content.</li>
+      <li>Check keyboard focus after visual changes.</li>
+      <li>Prefer flow layout before absolute positioning.</li>
+      <li>Use consistent spacing tokens.</li>
+      <li>Inspect narrow, wide, and zoomed views.</li>
+    </ul>
+  </div>
+</body>
+</html>

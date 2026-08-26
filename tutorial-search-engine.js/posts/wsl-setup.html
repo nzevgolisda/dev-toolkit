@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WSL setup</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>WSL Quick Setup Guide</h1>
+    
+    <h2>Installing WSL2</h2>
+    <p>Run in PowerShell as Administrator:</p>
+    <pre><code># Install WSL with default Ubuntu
+wsl --install
+
+# Or install specific distro
+wsl --install -d Ubuntu-22.04
+
+# List available distributions
+wsl --list --online</code></pre>
+    <p>Restart your computer after installation.</p>
+
+    <h2>Basic WSL Commands</h2>
+    <pre><code># List installed distributions
+wsl --list --verbose
+
+# Set default distribution
+wsl --set-default Ubuntu-22.04
+
+# Start specific distro
+wsl -d Ubuntu-22.04
+
+# Shutdown WSL
+wsl --shutdown
+
+# Terminate specific distro
+wsl --terminate Ubuntu-22.04
+
+# Update WSL
+wsl --update</code></pre>
+
+    <h2>Initial Setup</h2>
+    <p>After first launch, update packages:</p>
+    <pre><code># Update package lists
+sudo apt update
+
+# Upgrade installed packages
+sudo apt upgrade -y
+
+# Install essential tools
+sudo apt install -y build-essential git curl wget</code></pre>
+
+    <h2>Configuring `sudo` without a password</h2>
+    <p>To avoid typing your password for every <code>sudo</code> command, you can add a sudoers file for your user.</p>
+    <pre><code># Open the sudoers editor
+sudo visudo
+
+# Add the following line at the end of the file, replacing 'username' with your username
+username ALL=(ALL) NOPASSWD: ALL
+</code></pre>
+
+    <h2>Development Tools</h2>
+    <h3>Node.js</h3>
+    <pre><code># Using NodeSource
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# Verify installation
+node --version
+npm --version</code></pre>
+
+    <h3>Python</h3>
+    <pre><code># Install Python and pip
+sudo apt install -y python3 python3-pip python3-venv
+
+# Verify installation
+python3 --version
+pip3 --version</code></pre>
+
+    <h3>Docker</h3>
+    <p>Install Docker Desktop for Windows with WSL2 backend. Then in WSL:</p>
+    <pre><code># Verify Docker is accessible
+docker --version
+docker ps</code></pre>
+
+    <h2>File System Access</h2>
+    <pre><code># Access Windows files from WSL
+cd /mnt/c/Users/YourUsername/
+
+# Access WSL files from Windows
+# In File Explorer: \\wsl$\Ubuntu-22.04\home\username
+
+# Open current directory in Windows Explorer
+explorer.exe .</code></pre>
+
+    <h2>Git Configuration</h2>
+    <pre><code># Set user info
+git config --global user.name "Your Name"
+git config --global user.email "your.email@example.com"
+
+# Set default branch name
+git config --global init.defaultBranch main
+
+# Use Windows credential manager
+git config --global credential.helper "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"</code></pre>
+
+    <h2>Useful Tips</h2>
+    <ul>
+      <li>Store project files in Linux filesystem (<code>~/</code>) for better performance</li>
+      <li>Use Windows Terminal for better WSL experience</li>
+      <li>Install VS Code and use the WSL extension</li>
+      <li>Set up SSH keys for Git authentication</li>
+    </ul>
+
+    <h2>Managing Multiple Distributions</h2>
+    <p>You can have multiple Linux distributions installed at the same time.</p>
+    <pre><code># List online distributions
+wsl --list --online
+
+# Install another distro
+wsl --install -d Debian
+
+# Set the default distro for new terminals
+wsl --set-default Ubuntu-22.04
+</code></pre>
+
+    <h2>Customization and Productivity</h2>
+    <h3>Install a better shell (Zsh + Oh My Zsh)</h3>
+    <pre><code># Install Zsh
+sudo apt install -y zsh
+
+# Install Oh My Zsh
+sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# Set Zsh as your default shell
+chsh -s $(which zsh)
+</code></pre>
+
+    <h3>Use a terminal multiplexer (tmux)</h3>
+    <p><code>tmux</code> lets you have multiple terminal sessions in a single window, which is great for running multiple processes at once.</p>
+    <pre><code># Install tmux
+sudo apt install -y tmux
+
+# Start a new session
+tmux
+
+# Learn the keybindings (e.g., Ctrl+b, then % to split vertically)
+</code></pre>
+
+    <h2>Backing Up Your Distribution</h2>
+    <p>It's a good practice to back up your WSL distribution, especially before making major changes.</p>
+    <pre><code># Export your distribution to a .tar file
+wsl --export Ubuntu-22.04 "D:\backups\ubuntu.tar"
+
+# You can later import this backup to a new distribution
+wsl --import MyNewUbuntu "D:\wsl\MyNewUbuntu" "D:\backups\ubuntu.tar"
+</code></pre>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Keep the distribution and Windows components updated.</li>
+            <li>Store active projects in the fastest filesystem.</li>
+            <li>Use a non-root user for daily work.</li>
+            <li>Test Windows and Linux path boundaries.</li>
+            <li>Back up important distribution data.</li>
+        </ul>
+    </div>
+</body>
+</html>

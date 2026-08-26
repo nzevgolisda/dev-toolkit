@@ -1,0 +1,95 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setdefaultlanguage{greek}
+\setmainfont{Noto Sans}
+\setsansfont{Noto Sans}
+\usepackage[margin=1.35cm,top=0.85cm,bottom=0.85cm]{geometry}
+\usepackage{microtype}
+\usepackage{enumitem}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{fontawesome5}
+\usepackage[colorlinks=true,linkcolor=accent,urlcolor=accent,breaklinks=true,pdfnewwindow=true]{hyperref}
+
+\definecolor{ink}{HTML}{172A3A}
+\definecolor{accent}{HTML}{E76F51}
+\definecolor{muted}{HTML}{5D6B75}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\emergencystretch=1.5em
+\pagestyle{empty}
+\setlist[itemize]{leftmargin=1.15em,itemsep=0pt,topsep=1pt,parsep=0pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\urlstyle{same}
+
+\newcommand{\sectiontitle}[1]{%
+    \vspace{0.28em}%
+    {\color{accent}\rule{0.08\textwidth}{1.4pt}}\hspace{0.55em}%
+    {\small\bfseries\color{ink}\MakeUppercase{#1}}\par
+    \vspace{0.12em}
+}
+\newcommand{\cvrow}[2]{%
+    {\small\bfseries\color{accent}#1}\par
+    {\small\color{ink}#2}\par\vspace{0.03em}
+}
+\newcommand{\entry}[4]{%
+    {\small\bfseries\color{accent}#1}\par
+    {\bfseries\color{ink}#2}\par
+    {\small\color{muted}#3, #4}\par\vspace{0.03em}
+}
+
+\begin{document}
+
+\noindent\colorbox{ink}{%
+    \parbox{\dimexpr\textwidth-2\fboxsep\relax}{%
+        \vspace{0.15em}
+        {\fontsize{27}{30}\selectfont\bfseries\color{white}Νίκος Ζευγόλης}\par
+        \vspace{2pt}
+        {\large\color{accent}Μαθηματικός \textbar\ Junior Backend Developer}\par
+        \vspace{7pt}
+        \begin{tabularx}{\linewidth}{@{}Y Y@{}}
+            {\footnotesize\color{white}\faMapMarker\hspace{0.35em}Αθήνα, Νέα Ερυθραία} &
+            {\footnotesize\color{white}\href{tel:+306942571752}{\textcolor{white}{\faPhone\hspace{0.35em}(+30) 6942571752}}}\\
+        \end{tabularx}\par\vspace{3pt}
+        \parbox{\linewidth}{\footnotesize\color{white}\textbf{NAV}\hspace{0.8em}\href{https://nzevgolisda.github.io/}{\textcolor{white}{Portfolio}}\hspace{1.1em}\href{https://github.com/nzevgolisda}{\textcolor{white}{GitHub}}\hspace{1.1em}\href{https://www.linkedin.com/in/nikos-zevgolis-2193871b7/}{\textcolor{white}{LinkedIn}}\hspace{1.1em}\href{mailto:nzevgolisda@gmail.com}{\textcolor{white}{Email}}}
+        \vspace{0.45em}
+    }%
+}\par
+
+\sectiontitle{Προφίλ}
+Απόφοιτος Μαθηματικών με ισχυρό αναλυτικό υπόβαθρο και βαθύ ενδιαφέρον για την επιστήμη δεδομένων και την ανάπτυξη λογισμικού. Άριστη γνώση Python, JavaScript και SQL, με εμπειρία σε ατομικά και ομαδικά διαδικτυακά έργα. Στόχος η αξιοποίηση της μαθηματικής σκέψης και της τεχνικής κατάρτισης για τη δημιουργία αξιόπιστων εφαρμογών και την εξαγωγή συμπερασμάτων από δεδομένα. Portfolio: \href{https://nzevgolisda.github.io/}{nzevgolisda.github.io}.
+
+\sectiontitle{Τεχνικές Δεξιότητες}
+\cvrow{Προγραμματισμός}{Python (pandas, NumPy, Matplotlib, Seaborn), JavaScript (ES6), HTML5, CSS, SQL}
+\cvrow{Ανάλυση}{Καθαρισμός δεδομένων, διερευνητική ανάλυση δεδομένων, στατιστική μοντελοποίηση, dashboards, προχωρημένο Excel, Tableau}
+\cvrow{Εργαλεία}{Linux (Ubuntu), Windows, WSL, Git, VS Code, Jupyter Notebook, MySQL, PostgreSQL, MATLAB, \LaTeX}
+\cvrow{Πλατφόρμες}{Power BI, Microsoft Office, LibreOffice, Tableau, GitHub}
+
+\sectiontitle{Εμπειρία}
+\entry{2012--2021}{Καθηγητής Μαθηματικών}{Αυτοαπασχολούμενος}{Αθήνα, Ελλάδα}
+\begin{itemize}
+    \item Παροχή εξατομικευμένης διδασκαλίας σε φοιτητές και μαθητές λυκείου σε ένα ευρύ φάσμα μαθηματικών αντικειμένων.
+    \item Διδασκαλία Απειροστικού Λογισμού, Ανάλυσης, Διαφορικών Εξισώσεων, Γραμμικής Άλγεβρας, Πιθανοτήτων και Στατιστικής, Γεωμετρίας και προγραμματισμού Python.
+    \item Σχεδιασμός εξατομικευμένων πλάνων μαθημάτων και στρατηγικών επίλυσης προβλημάτων για προετοιμασία εξετάσεων και εργασίες.
+\end{itemize}
+
+\sectiontitle{Επιλεγμένα Έργα}
+\cvrow{Portfolio}{\href{https://nzevgolisda.github.io/}{nzevgolisda.github.io}: προσωπικό portfolio επιστήμης δεδομένων με Python, JavaScript, SQL, HTML5/CSS και Git.}
+\cvrow{Web εφαρμογή}{\href{https://github.com/nzevgolisda/tox.gr-frontend}{tox.gr-frontend}: frontend για web εφαρμογή άμεσων μηνυμάτων με δυνατότητες κοινωνικού δικτύου και forum.}
+\cvrow{Επιστημονικά εργαλεία}{\href{https://github.com/nzevgolisda/science-tools}{science-tools}: επαναχρησιμοποιήσιμες μονάδες Python και JavaScript για αριθμητικό λογισμό, προσομοιώσεις φυσικής, άλγεβρα, γεωμετρία και υπολογισμούς σε πλέγματα.}
+\cvrow{Άλλα αποθετήρια}{\href{https://github.com/nzevgolisda/Games}{Games} (επιτραπέζια παιχνίδια), \href{https://github.com/nzevgolisda/slides.js}{slides.js} (παρουσιάσεις JavaScript) και \href{https://github.com/nzevgolisda/spreadsheets}{spreadsheets} (Python/Excel).}
+
+\sectiontitle{Εκπαίδευση}
+\entry{2010--2021}{Πτυχίο Θεωρητικών Μαθηματικών (σε εξέλιξη)}{Πανεπιστήμιο Κρήτης}{Ελλάδα}
+Εξειδίκευση στις Διαφορικές Εξισώσεις, την Υπολογιστική Μαθηματική, τη Γεωμετρία και τη Θεωρία Πιθανοτήτων. Σχετικά μαθήματα: Πραγματική Ανάλυση, Αφηρημένη Άλγεβρα, Τοπολογία, Αριθμητικές Μέθοδοι και Μαθηματική Στατιστική. Θέμα πτυχιακής εργασίας: δυναμικά συστήματα και αριθμητικές προσομοιώσεις.
+
+\sectiontitle{Γλώσσες και Πρόσθετες Πληροφορίες}
+\cvrow{Ελληνικά}{Μητρική γλώσσα}
+\cvrow{Αγγλικά}{Πιστοποιητικό B2, άνετη γραπτή και προφορική επικοινωνία}
+\cvrow{Γαλλικά}{Πιστοποιητικό A2, βασική ικανότητα συνομιλίας}
+\cvrow{Ενδιαφέροντα}{Μπάσκετ, Σκάκι, Μουσική, Επίλυση προβλημάτων}\vspace{0.1em}
+\cvrow{Στρατιωτική θητεία}{Εκπληρωμένη}
+
+\end{document}

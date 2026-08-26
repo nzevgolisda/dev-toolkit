@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GitKraken Guide</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>GitKraken Guide</h1>
+    <p class="post-meta">A visual workflow for reviewing, branching, and resolving Git changes.</p>
+
+    <h2>Start With a Repository</h2>
+    <ol>
+      <li>Open GitKraken and choose <strong>Open a repo</strong> or <strong>Clone a repo</strong>.</li>
+      <li>Confirm the working directory and remote in the repository panel.</li>
+      <li>Fetch before starting work so the graph reflects the latest remote state.</li>
+      <li>Select the branch you want to work from and create a descriptive feature branch.</li>
+    </ol>
+
+    <h2>Review Changes</h2>
+    <p>The left panel shows changed files, while the diff view lets you inspect additions and deletions before staging.</p>
+    <ul>
+      <li>Click a file to review its diff.</li>
+      <li>Stage only the hunks that belong to the current change.</li>
+      <li>Write a short commit summary that describes the result.</li>
+      <li>Use the commit graph to verify the branch and parent commit.</li>
+    </ul>
+
+    <h2>Branches and Pull Requests</h2>
+    <pre><code># A matching CLI workflow
+git fetch origin
+git switch -c feature/search-tutorials
+git add TutorialSite/
+git commit -m "Add searchable tutorial library"
+git push -u origin feature/search-tutorials</code></pre>
+    <p>GitKraken presents the same operations visually. Keep feature branches small, pull or fetch before publishing, and open a pull request from the branch rather than committing directly to the default branch.</p>
+
+    <h2>Resolve Conflicts</h2>
+    <ol>
+      <li>Pull or merge the target branch and open the conflict view.</li>
+      <li>Review each side and choose the intended result, not simply “ours” or “theirs”.</li>
+      <li>Save the resolved file and mark it resolved.</li>
+      <li>Run tests, then commit the merge or continue the rebase.</li>
+    </ol>
+
+    <h2>Good Habits</h2>
+    <ul>
+      <li>Use names that explain branch purpose.</li>
+      <li>Review staged files before every commit.</li>
+      <li>Keep generated files and secrets out of commits.</li>
+      <li>Use the graph to explain history during code review.</li>
+    </ul>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Review the graph before starting a merge.</li>
+      <li>Stage only files belonging to the current task.</li>
+      <li>Use descriptive branch names and commit messages.</li>
+      <li>Resolve conflicts by understanding both changes.</li>
+      <li>Run checks before pushing a branch.</li>
+    </ul>
+  </div>
+</body>
+</html>

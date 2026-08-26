@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WSL Performance</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>WSL Performance Optimization</h1>
+    
+    <h2>File System Performance</h2>
+    <h3>Store Projects in WSL</h3>
+    <pre><code># Bad: Accessing Windows files from WSL is slow
+cd /mnt/c/Users/Name/Projects
+
+# Good: Store in WSL filesystem
+cd ~/projects
+
+# Benchmark the difference
+time ls -lR /mnt/c/Users/Name/LargeProject  # Slow
+time ls -lR ~/LargeProject                  # Fast</code></pre>
+
+    <h3>Exclude WSL Folders from Windows Defender</h3>
+    <p>In PowerShell as Administrator:</p>
+    <pre><code># Get WSL installation path
+$wslPath = "$env:LOCALAPPDATA\Packages"
+
+# Exclude WSL distro folders
+Add-MpPreference -ExclusionPath "$wslPath\CanonicalGroupLimited.Ubuntu*"
+Add-MpPreference -ExclusionPath "$env:USERPROFILE\AppData\Local\Docker\wsl"</code></pre>
+
+    <h2>Memory Configuration</h2>
+    <p>Create/edit <code>%USERPROFILE%\.wslconfig</code>:</p>
+    <pre><code>[wsl2]
+# Limit memory to 8GB
+memory=8GB
+
+# Limit processors
+processors=4
+
+# Set swap size
+swap=2GB
+
+# Disable page reporting (can improve performance)
+pageReporting=false
+
+# Set swap file location
+swapFile=C:\\temp\\wsl-swap.vhdx</code></pre>
+
+    <h2>Disk I/O Optimization</h2>
+    <h3>Use VHD on SSD</h3>
+    <pre><code># Move WSL distro to faster drive
+# Export distro
+wsl --export Ubuntu-22.04 D:\WSL\ubuntu-backup.tar
+
+# Unregister
+wsl --unregister Ubuntu-22.04
+
+# Import to new location
+wsl --import Ubuntu-22.04 D:\WSL\Ubuntu D:\WSL\ubuntu-backup.tar</code></pre>
+
+    <h3>Sparse VHD</h3>
+    <pre><code># Reclaim disk space (from PowerShell as Admin)
+wsl --shutdown
+
+# Optimize VHD
+Optimize-VHD -Path "$env:LOCALAPPDATA\Packages\CanonicalGroupLimited.Ubuntu*\LocalState\ext4.vhdx" -Mode Full</code></pre>
+
+    <h2>WSL Configuration</h2>
+    <p>Edit <code>/etc/wsl.conf</code>:</p>
+    <pre><code>[boot]
+systemd=true
+
+[automount]
+enabled = true
+options = "metadata,umask=22,fmask=11"
+mountFsTab = true
+
+[network]
+generateHosts = true
+generateResolvConf = true
+
+[interop]
+enabled = true
+appendWindowsPath = false  # Faster PATH lookup</code></pre>
+
+    <h2>Shell Performance</h2>
+    <h3>Optimize PATH</h3>
+    <pre><code># In .bashrc, remove Windows paths if not needed
+export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+# Or selectively add Windows tools
+export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+export PATH="$PATH:/mnt/c/Windows/System32"</code></pre>
+
+    <h3>Disable Windows PATH Appending</h3>
+    <pre><code># In /etc/wsl.conf
+[interop]
+appendWindowsPath = false
+
+# Then manually add needed Windows tools
+export PATH="$PATH:/mnt/c/Windows/System32:/mnt/c/Windows"</code></pre>
+
+    <h2>Git Performance</h2>
+    <pre><code># Use WSL git, not Windows git
+which git  # Should show /usr/bin/git
+
+# Enable git file system monitor
+git config --global core.fsmonitor true
+git config --global core.untrackedcache true
+
+# Increase buffer for large repos
+git config --global http.postBuffer 524288000</code></pre>
+
+    <h2>Node.js Performance</h2>
+    <pre><code># Install Node.js in WSL, not Windows
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install -y nodejs
+
+# Use pnpm for faster package installation
+npm install -g pnpm
+
+# Or use Yarn
+npm install -g yarn
+
+# Enable caching
+npm config set cache ~/.npm-cache --global</code></pre>
+
+    <h2>Docker Performance</h2>
+    <pre><code># Use Docker Desktop with WSL2 backend
+
+# In .wslconfig, allocate enough resources
+[wsl2]
+memory=8GB
+processors=4
+
+# Use BuildKit for faster builds
+export DOCKER_BUILDKIT=1
+
+# Clean up regularly
+docker system prune -a</code></pre>
+
+    <h2>Build Performance</h2>
+    <pre><code># Use all CPU cores for compilation
+export MAKEFLAGS="-j$(nproc)"
+
+# For npm builds
+npm config set jobs max
+
+# For Python builds
+pip install --upgrade pip setuptools wheel</code></pre>
+
+    <h2>Monitoring Performance</h2>
+    <pre><code># Check WSL resource usage from Windows
+wsl -l -v
+
+# Inside WSL, monitor resources
+htop
+free -h
+df -h
+
+# Check disk I/O
+iostat -x 1
+
+# Monitor network
+iftop</code></pre>
+
+    <h2>Startup Optimization</h2>
+    <h3>Clean .bashrc</h3>
+    <pre><code># Profile .bashrc startup time
+time bash -i -c exit
+
+# Use lazy loading for tools
+# Instead of: eval "$(rbenv init -)"
+# Use:
+rbenv() {
+  unset -f rbenv
+  eval "$(command rbenv init -)"
+  rbenv "$@"
+}</code></pre>
+
+    <h3>Reduce systemd Services</h3>
+    <pre><code># List services
+systemctl list-units --type=service
+
+# Disable unnecessary services
+sudo systemctl disable service-name
+sudo systemctl stop service-name</code></pre>
+
+    <h2>Network Performance</h2>
+    <pre><code># In .wslconfig, try experimental network mode
+[wsl2]
+networkingMode=mirrored
+dnsTunneling=true
+firewall=true
+
+# Requires Windows 11 22H2 or later
+# Restart WSL: wsl --shutdown</code></pre>
+
+    <h2>Benchmarking</h2>
+    <pre><code># CPU benchmark
+sysbench cpu --threads=$(nproc) run
+
+# Memory benchmark
+sysbench memory --threads=$(nproc) run
+
+# File I/O benchmark
+dd if=/dev/zero of=testfile bs=1M count=1024 oflag=direct
+rm testfile
+
+# Compare WSL vs Windows filesystem
+time find ~/project -name "*.js" | wc -l
+time find /mnt/c/project -name "*.js" | wc -l</code></pre>
+
+    <h2>Quick Wins Checklist</h2>
+    <ul>
+      <li>✓ Store code in WSL filesystem, not /mnt/c/</li>
+      <li>✓ Exclude WSL from Windows Defender</li>
+      <li>✓ Allocate enough RAM in .wslconfig</li>
+      <li>✓ Use WSL versions of tools (git, node, python)</li>
+      <li>✓ Disable appendWindowsPath if not needed</li>
+      <li>✓ Keep WSL updated: <code>wsl --update</code></li>
+      <li>✓ Restart WSL after config changes: <code>wsl --shutdown</code></li>
+      <li>✓ Use SSD for WSL installation</li>
+    </ul>
+
+    <h2>Advanced: Custom Kernel</h2>
+    <p>For advanced users, compiling your own Linux kernel for WSL can yield performance benefits. This allows you to enable specific features, optimize for your hardware, and remove unused drivers.</p>
+    <pre><code># 1. Clone the WSL2-Linux-Kernel repository from Microsoft's GitHub
+git clone https://github.com/microsoft/WSL2-Linux-Kernel.git
+cd WSL2-Linux-Kernel
+
+# 2. Copy your existing config or start fresh
+cp /proc/config.gz .
+gunzip config.gz
+mv config .config
+
+# 3. Customize the kernel config
+make menuconfig
+
+# 4. Compile the kernel
+make -j$(nproc)
+
+# 5. In %USERPROFILE%/.wslconfig, point to your new kernel
+[wsl2]
+kernel=C:\\path\\to\\your\\WSL2-Linux-Kernel\\arch\\x86\\boot\\bzImage
+</code></pre>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Measure before changing filesystem or memory settings.</li>
+            <li>Keep active Linux projects together when possible.</li>
+            <li>Stop unused distributions to reclaim resources.</li>
+            <li>Compare cold and warm command timings.</li>
+            <li>Record changes so they can be reversed.</li>
+        </ul>
+    </div>
+</body>
+</html>

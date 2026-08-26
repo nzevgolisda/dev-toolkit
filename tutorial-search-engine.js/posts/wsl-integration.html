@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>WSL Windows Integration</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>WSL Windows Integration</h1>
+    
+    <h2>File System Access</h2>
+    <h3>Access Windows Files from WSL</h3>
+    <pre><code># Windows drives are mounted under /mnt
+cd /mnt/c/Users/YourUsername/Documents
+cd /mnt/d/Projects
+
+# Navigate to Windows home
+cd /mnt/c/Users/$USER
+
+# Create symbolic link for easier access
+ln -s /mnt/c/Users/YourUsername ~/winuser</code></pre>
+
+    <h3>Access WSL Files from Windows</h3>
+    <pre><code># In File Explorer, type:
+\\wsl$\Ubuntu-22.04\home\username
+
+# Or from command prompt:
+\\wsl$\Ubuntu-22.04\
+
+# Open Windows Explorer from WSL
+explorer.exe .
+explorer.exe /mnt/c/Users</code></pre>
+
+    <h2>Running Windows Commands from WSL</h2>
+    <pre><code># Run any Windows executable
+notepad.exe file.txt
+code.exe .
+powershell.exe -Command "Get-Process"
+
+# Use cmd.exe
+cmd.exe /c dir
+
+# Pipe between WSL and Windows
+ls -la | clip.exe  # Copy to Windows clipboard
+echo "test" | clip.exe</code></pre>
+
+    <h2>Running Linux Commands from Windows</h2>
+    <pre><code># From PowerShell or CMD
+wsl ls -la
+wsl grep "pattern" file.txt
+wsl python3 script.py
+
+# Run command in specific distro
+wsl -d Ubuntu-22.04 python3 --version
+
+# Run as specific user
+wsl -u root apt update</code></pre>
+
+    <h2>VS Code Integration</h2>
+    <pre><code># Install Remote-WSL extension in VS Code
+
+# Open project from WSL
+code .
+code /path/to/project
+
+# Or from Windows, open WSL folder
+# In VS Code Command Palette: Remote-WSL: New Window</code></pre>
+
+    <h2>Environment Variables</h2>
+    <h3>Access Windows Environment Variables</h3>
+    <pre><code># View Windows PATH from WSL
+echo $PATH | grep -o "/mnt/c[^:]*"
+
+# Access Windows environment variables
+wslpath -u "$(cmd.exe /c echo %USERPROFILE%)"
+
+# Convert paths
+wslpath -w ~/projects  # Convert to Windows path
+wslpath -u 'C:\Users'  # Convert to WSL path</code></pre>
+
+    <h3>Share Environment Variables</h3>
+    <pre><code># In /etc/wsl.conf
+[interop]
+enabled = true
+appendWindowsPath = true
+
+# To enable systemd support (for services like Docker, microk8s)
+[boot]
+systemd=true
+</code></pre>
+
+    <h3>Access Windows env vars</h3>
+    <pre><code>printenv | grep USERPROFILE</code></pre>
+
+    <h2>Git Credential Sharing</h2>
+    <pre><code># Use Windows Git Credential Manager
+git config --global credential.helper \
+  "/mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe"
+
+# Or use Windows credential store
+git config --global credential.helper manager-core</code></pre>
+
+    <h2>SSH Key Sharing</h2>
+    <pre><code># Copy Windows SSH keys to WSL
+cp -r /mnt/c/Users/YourUsername/.ssh ~/
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_rsa
+chmod 644 ~/.ssh/id_rsa.pub
+
+# Or create symbolic link
+ln -s /mnt/c/Users/YourUsername/.ssh ~/.ssh
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/*</code></pre>
+
+    <h2>Browser Integration</h2>
+    <pre><code># Open URLs in Windows browser
+wslview https://example.com
+
+# Or use specific browser
+cmd.exe /c start https://example.com
+powershell.exe -c "Start-Process 'https://example.com'"
+
+# Add alias to .bashrc
+alias open="cmd.exe /c start"
+# Then use: open https://example.com</code></pre>
+
+    <h2>Docker Desktop Integration</h2>
+    <pre><code># Enable WSL2 backend in Docker Desktop settings
+
+# Verify Docker works from WSL
+docker --version
+docker ps
+
+# Run containers
+docker run -it ubuntu bash
+docker-compose up</code></pre>
+
+    <h2>Running GUI Apps with WSLg</h2>
+    <p>WSLg (Windows Subsystem for Linux GUI) is built-in to modern versions of WSL and allows you to run Linux GUI applications seamlessly.</p>
+    <pre><code># First, update your WSL instance
+wsl --update
+
+# Install a GUI application
+sudo apt update
+sudo apt install gedit -y
+
+# Run the application from your WSL terminal
+gedit
+
+# The application window will appear on your Windows desktop.
+# You can also find it in your Start Menu under the distribution's folder (e.g., "Ubuntu").
+</code></pre>
+
+    <h2>Clipboard Integration</h2>
+    <pre><code># Copy to Windows clipboard
+echo "text" | clip.exe
+cat file.txt | clip.exe
+pwd | clip.exe
+
+# Create alias for easier use
+alias pbcopy='clip.exe'
+alias pbpaste='powershell.exe Get-Clipboard'
+
+# Usage
+echo "test" | pbcopy
+pbpaste > file.txt</code></pre>
+
+    <h2>Windows Terminal Integration</h2>
+    <pre><code># Windows Terminal automatically detects WSL
+
+# Set WSL as default profile in settings.json
+{
+  "defaultProfile": "{guid-of-wsl-profile}",
+  "profiles": {
+    "list": [
+      {
+        "guid": "{...}",
+        "name": "Ubuntu-22.04",
+        "source": "Windows.Terminal.Wsl",
+        "startingDirectory": "~"
+      }
+    ]
+  }
+}</code></pre>
+
+    <h2>File Permissions Considerations</h2>
+    <pre><code># Windows files accessed from WSL may have issues
+# Store development files in WSL filesystem for better performance
+
+# Configure git to ignore file mode changes on Windows files
+git config core.fileMode false
+
+# In /etc/wsl.conf
+[automount]
+options = "metadata,umask=22,fmask=11"</code></pre>
+
+    <h2>Network Service Access</h2>
+    <pre><code># Access Windows services from WSL
+WINDOWS_IP=$(ip route | grep default | awk '{print $3}')
+curl http://$WINDOWS_IP:8080
+
+# Access WSL services from Windows
+curl http://localhost:3000
+
+# Services in WSL are accessible via localhost automatically</code></pre>
+
+    <h2>Useful Scripts</h2>
+    <h3>Convert Path Function</h3>
+    <pre><code># Add to .bashrc
+winpath() {
+  wslpath -w "$1"
+}
+
+linuxpath() {
+  wslpath -u "$1"
+}
+
+# Usage
+winpath ~/projects
+linuxpath 'C:\Users\Name\Documents'</code></pre>
+
+    <h3>Quick Open in Explorer</h3>
+    <pre><code># Add to .bashrc
+explore() {
+  explorer.exe "${1:-.}"
+}
+
+# Usage
+explore           # Open current directory
+explore ~/projects # Open specific directory</code></pre>
+
+    <h2>Configuration Best Practices</h2>
+    <ul>
+      <li>Store code in WSL filesystem (~/) for better performance</li>
+      <li>Use Windows tools (VS Code, browsers) with WSL backend</li>
+      <li>Share credentials between Windows and WSL</li>
+      <li>Use symbolic links for frequently accessed Windows directories</li>
+      <li>Configure proper file permissions in /etc/wsl.conf</li>
+      <li>Use Windows Terminal for the best terminal experience</li>
+    </ul>
+
+    <h2>Troubleshooting Common Issues</h2>
+    <ul>
+        <li><strong>"Command not found" for Windows executables:</strong> Ensure `appendWindowsPath` is `true` in `/etc/wsl.conf`.</li>
+        <li><strong>Slow performance:</strong> Make sure your project files are in the WSL filesystem (e.g., `~/projects`), not the Windows filesystem (`/mnt/c/...`).</li>
+        <li><strong>Network issues:</strong> If you can't access services, try `wsl --shutdown` and restart your terminal. Also check Windows Firewall rules.</li>
+        <li><strong>GUI apps not working:</strong> Run `wsl --update` to ensure you have the latest version of WSL and WSLg.</li>
+        <li><strong>File permission errors:</strong> Use the `metadata` option in `/etc/wsl.conf` to get more granular control over file permissions on mounted Windows drives.</li>
+    </ul>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Choose one canonical location for each project.</li>
+      <li>Use explicit path conversion at boundaries.</li>
+      <li>Check newline and permission behavior in scripts.</li>
+      <li>Keep credentials out of shared mounts.</li>
+      <li>Test commands from both environments.</li>
+    </ul>
+  </div>
+</body>
+</html>

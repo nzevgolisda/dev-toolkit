@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GitHub Actions Basics</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>GitHub Actions Basics</h1>
+    <p class="post-meta">Automate checks with small, repeatable workflow files.</p>
+
+    <h2>A First Workflow</h2>
+    <pre><code>name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test</code></pre>
+    <p>Save this as <code>.github/workflows/test.yml</code>. A workflow responds to events, creates jobs on runners, and executes ordered steps.</p>
+
+    <h2>Triggers and Jobs</h2>
+    <ul>
+      <li>Use <code>pull_request</code> for checks before merging.</li>
+      <li>Use <code>push</code> for branch and release automation.</li>
+      <li>Give each job one clear responsibility.</li>
+      <li>Use a matrix when the same checks need multiple runtimes.</li>
+    </ul>
+    <pre><code>strategy:
+  matrix:
+    node: [20, 22]
+steps:
+  - uses: actions/setup-node@v4
+    with:
+      node-version: ${{ matrix.node }}</code></pre>
+
+    <h2>Secrets and Permissions</h2>
+    <p>Never put tokens directly in workflow files. Store sensitive values in repository or environment secrets and reference them through the secrets context.</p>
+    <pre><code>permissions:
+  contents: read
+
+steps:
+  - run: ./deploy.sh
+    env:
+      DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}</code></pre>
+
+    <h2>Reliable Workflows</h2>
+    <ul>
+      <li>Pin action major versions and review updates.</li>
+      <li>Cache dependencies only after the uncached job works.</li>
+      <li>Use artifacts for test reports and build output.</li>
+      <li>Keep deployment jobs behind an environment approval.</li>
+    </ul>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Run checks on pull requests before merging.</li>
+      <li>Keep permissions as narrow as possible.</li>
+      <li>Review logs and artifacts after failures.</li>
+      <li>Never print secrets in workflow output.</li>
+      <li>Keep deployment steps separately reviewable.</li>
+    </ul>
+  </div>
+</body>
+</html>

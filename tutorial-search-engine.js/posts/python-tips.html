@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Python tips</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Python Tips & Productivity Patterns</h1>
+    
+    <h2>List Comprehensions</h2>
+    <p>Replace verbose loops with concise list comprehensions:</p>
+    <pre><code># Traditional approach
+squares = []
+for x in range(10):
+    squares.append(x**2)
+
+# List comprehension
+squares = [x**2 for x in range(10)]
+
+# With filtering
+even_squares = [x**2 for x in range(10) if x % 2 == 0]</code></pre>
+
+    <h2>Dictionary Comprehensions</h2>
+    <p>Create dictionaries efficiently:</p>
+    <pre><code># Create a dict from two lists
+keys = ['a', 'b', 'c']
+values = [1, 2, 3]
+my_dict = {k: v for k, v in zip(keys, values)}
+
+# Filter and transform
+data = {'a': 1, 'b': 2, 'c': 3, 'd': 4}
+filtered = {k: v*2 for k, v in data.items() if v > 2}</code></pre>
+
+    <h2>Context Managers</h2>
+    <p>Use <code>with</code> statements for automatic resource management:</p>
+    <pre><code># File handling
+with open('file.txt', 'r') as f:
+    content = f.read()
+# File automatically closed
+
+# Custom context manager
+from contextlib import contextmanager
+
+@contextmanager
+def timer():
+    import time
+    start = time.time()
+    yield
+    print(f"Elapsed: {time.time() - start:.2f}s")
+
+with timer():
+    # Your code here
+    pass</code></pre>
+
+    <h2>Unpacking</h2>
+    <p>Multiple assignment and function arguments:</p>
+    <pre><code># Basic unpacking
+a, b, c = [1, 2, 3]
+
+# Extended unpacking
+first, *middle, last = [1, 2, 3, 4, 5]
+# first=1, middle=[2,3,4], last=5
+
+# Dict unpacking in function calls
+config = {'host': 'localhost', 'port': 8080}
+connect(**config)</code></pre>
+
+    <h2>F-Strings</h2>
+    <p>Modern string formatting (Python 3.6+):</p>
+    <pre><code>name = "Alice"
+age = 30
+
+# Basic f-string
+greeting = f"Hello, {name}!"
+
+# With expressions
+info = f"{name} is {age} years old, born in {2024-age}"
+
+# Formatting numbers
+pi = 3.14159
+formatted = f"Pi is approximately {pi:.2f}"</code></pre>
+
+    <h2>Dataclasses (Python 3.7+)</h2>
+    <p>Create classes for storing data with less boilerplate code.</p>
+    <pre><code>from dataclasses import dataclass
+
+@dataclass
+class User:
+    name: str
+    email: str
+    active: bool = True
+
+user = User("Alice", "alice@example.com")
+print(user)  # User(name='Alice', email='alice@example.com', active=True)
+</code></pre>
+
+    <h2>Pathlib (Python 3.4+)</h2>
+    <p>An object-oriented way to handle filesystem paths.</p>
+    <pre><code>from pathlib import Path
+
+# Create a path object
+path = Path("/path/to/some/file.txt")
+
+# Access parts of the path
+print(path.name)      # 'file.txt'
+print(path.stem)      # 'file'
+print(path.suffix)    # '.txt'
+print(path.parent)    # '/path/to/some'
+
+# Join paths
+new_path = path.parent / 'other_file.log'
+
+# Read/write text
+path.write_text("Hello, world!")
+content = path.read_text()
+</code></pre>
+
+    <h2>Useful Built-ins</h2>
+    <ul>
+      <li><code>enumerate()</code> - Get index and value in loops</li>
+      <li><code>zip()</code> - Combine multiple iterables</li>
+      <li><code>any()</code> / <code>all()</code> - Boolean checks on iterables</li>
+      <li><code>sorted()</code> - Return sorted list with custom key</li>
+      <li><code>reversed()</code> - Reverse iteration without modifying</li>
+    </ul>
+
+    <h2>Type Hinting (Python 3.5+)</h2>
+    <p>Improve code clarity and allow for static analysis.</p>
+    <pre><code>def greet(name: str) -> str:
+    return f"Hello, {name}"
+
+from typing import List
+
+def total(numbers: List[float]) -> float:
+    return sum(numbers)
+</code></pre>
+
+    <h2>Itertools Module</h2>
+    <p>A collection of fast, memory-efficient tools for working with iterators.</p>
+    <pre><code>import itertools
+
+# Chain multiple iterables together
+a = [1, 2]
+b = ['x', 'y']
+for item in itertools.chain(a, b):
+    print(item)  # 1, 2, 'x', 'y'
+
+# Get all possible combinations
+for combo in itertools.combinations('ABC', 2):
+    print(combo)  # ('A', 'B'), ('A', 'C'), ('B', 'C')
+
+# Get all possible permutations
+for perm in itertools.permutations('ABC', 2):
+    print(perm) # ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')
+</code></pre>
+
+    <h2>Virtual Environments</h2>
+    <p>Always use virtual environments for projects:</p>
+    <pre><code># Create virtual environment
+python -m venv venv
+
+# Activate (Linux/Mac)
+source venv/bin/activate
+
+# Activate (Windows)
+venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Save dependencies
+pip freeze > requirements.txt</code></pre>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Try the example in a small disposable project.</li>
+            <li>Change one input and observe the result.</li>
+            <li>Add a test for the behavior you want to keep.</li>
+            <li>Prefer readable code over clever shortcuts.</li>
+            <li>Record the pattern in your project notes.</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_4b35e4aa281a3599dd1b34be4ba86e40 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_4b35e4aa281a3599dd1b34be4ba86e40" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_4b35e4aa281a3599dd1b34be4ba86e40 = L.map(
+                "map_4b35e4aa281a3599dd1b34be4ba86e40",
+                {
+                    center: [37.974, 23.735],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 12,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+            L.control.scale().addTo(map_4b35e4aa281a3599dd1b34be4ba86e40);
+
+            
+
+        
+    
+            var tile_layer_ffb317a3950a2b55bd133040f628fb34 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "Map data \u00a9 OpenStreetMap contributors, \u00a9 CARTO",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_ffb317a3950a2b55bd133040f628fb34.addTo(map_4b35e4aa281a3599dd1b34be4ba86e40);
+        
+    
+            var feature_group_d36c02da2b5dbcab8fde8150f939927c = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_23fa0a5c4a306b9515a9725e6f23bad2 = L.marker(
+                [37.9755, 23.7348],
+                {
+}
+            ).addTo(feature_group_d36c02da2b5dbcab8fde8150f939927c);
+        
+    
+            var icon_5268e829e2489d6b9398d4578425009c = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_01e2faa90c05fb73db6a21e10b384a3d = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_319ba7111aadd186c8958ebe59c45337 = $(`<div id="html_319ba7111aadd186c8958ebe59c45337" style="width: 100.0%; height: 100.0%;"><strong>Syntagma Square</strong><br>Central square and the Greek Parliament.</div>`)[0];
+                popup_01e2faa90c05fb73db6a21e10b384a3d.setContent(html_319ba7111aadd186c8958ebe59c45337);
+            
+        
+
+        marker_23fa0a5c4a306b9515a9725e6f23bad2.bindPopup(popup_01e2faa90c05fb73db6a21e10b384a3d)
+        ;
+
+        
+    
+    
+            marker_23fa0a5c4a306b9515a9725e6f23bad2.bindTooltip(
+                `<div>
+                     Syntagma Square
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_23fa0a5c4a306b9515a9725e6f23bad2.setIcon(icon_5268e829e2489d6b9398d4578425009c);
+            
+    
+            var marker_45a94d382a4cd7ab1f8d3f411389b3db = L.marker(
+                [37.9686, 23.741],
+                {
+}
+            ).addTo(feature_group_d36c02da2b5dbcab8fde8150f939927c);
+        
+    
+            var icon_71c7ad70989970de3f16068227f2001a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_bb83b1e5af4c19b8ba5515ac0b3207a1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_7978c082b9503f224a7addc3abe3447b = $(`<div id="html_7978c082b9503f224a7addc3abe3447b" style="width: 100.0%; height: 100.0%;"><strong>Panathenaic Stadium</strong><br>The marble stadium of the first modern Olympic Games.</div>`)[0];
+                popup_bb83b1e5af4c19b8ba5515ac0b3207a1.setContent(html_7978c082b9503f224a7addc3abe3447b);
+            
+        
+
+        marker_45a94d382a4cd7ab1f8d3f411389b3db.bindPopup(popup_bb83b1e5af4c19b8ba5515ac0b3207a1)
+        ;
+
+        
+    
+    
+            marker_45a94d382a4cd7ab1f8d3f411389b3db.bindTooltip(
+                `<div>
+                     Panathenaic Stadium
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_45a94d382a4cd7ab1f8d3f411389b3db.setIcon(icon_71c7ad70989970de3f16068227f2001a);
+            
+    
+            var marker_748c9dd8c674586574a3dc1be001ae4e = L.marker(
+                [37.9732, 23.7366],
+                {
+}
+            ).addTo(feature_group_d36c02da2b5dbcab8fde8150f939927c);
+        
+    
+            var icon_b2efd27878170055e48e184cb5f16f7d = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0c9d603d0e7920612baae9c2f4854845 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b8e98b6a4be54117fdb311d19f01e08a = $(`<div id="html_b8e98b6a4be54117fdb311d19f01e08a" style="width: 100.0%; height: 100.0%;"><strong>National Garden</strong><br>A green retreat beside Syntagma Square.</div>`)[0];
+                popup_0c9d603d0e7920612baae9c2f4854845.setContent(html_b8e98b6a4be54117fdb311d19f01e08a);
+            
+        
+
+        marker_748c9dd8c674586574a3dc1be001ae4e.bindPopup(popup_0c9d603d0e7920612baae9c2f4854845)
+        ;
+
+        
+    
+    
+            marker_748c9dd8c674586574a3dc1be001ae4e.bindTooltip(
+                `<div>
+                     National Garden
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_748c9dd8c674586574a3dc1be001ae4e.setIcon(icon_b2efd27878170055e48e184cb5f16f7d);
+            
+    
+            var marker_3d1b38c51a0337d65d26d01c891db35a = L.marker(
+                [37.942, 23.6896],
+                {
+}
+            ).addTo(feature_group_d36c02da2b5dbcab8fde8150f939927c);
+        
+    
+            var icon_468efe912a81ffaadd9548d1e0d77902 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_738b29933756e24348150b7e494ac4d8 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4ed0c387b9e0be5f1baa36455d252feb = $(`<div id="html_4ed0c387b9e0be5f1baa36455d252feb" style="width: 100.0%; height: 100.0%;"><strong>Stavros Niarchos Foundation Cultural Center</strong><br>Cultural center and waterfront park in Kallithea.</div>`)[0];
+                popup_738b29933756e24348150b7e494ac4d8.setContent(html_4ed0c387b9e0be5f1baa36455d252feb);
+            
+        
+
+        marker_3d1b38c51a0337d65d26d01c891db35a.bindPopup(popup_738b29933756e24348150b7e494ac4d8)
+        ;
+
+        
+    
+    
+            marker_3d1b38c51a0337d65d26d01c891db35a.bindTooltip(
+                `<div>
+                     Stavros Niarchos Foundation Cultural Center
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_3d1b38c51a0337d65d26d01c891db35a.setIcon(icon_468efe912a81ffaadd9548d1e0d77902);
+            
+    
+            var marker_f514f28b2125d50c05346ffbd6839d2d = L.marker(
+                [37.9475, 23.638],
+                {
+}
+            ).addTo(feature_group_d36c02da2b5dbcab8fde8150f939927c);
+        
+    
+            var icon_bc9125202cde983d8938d976c5cc8362 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "university",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e9a40e38760a8e73131de4a4a7717223 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_165d2b0100135e5bef3715d75f02ff8b = $(`<div id="html_165d2b0100135e5bef3715d75f02ff8b" style="width: 100.0%; height: 100.0%;"><strong>Piraeus Port</strong><br>Athens' historic harbor and gateway to the islands.</div>`)[0];
+                popup_e9a40e38760a8e73131de4a4a7717223.setContent(html_165d2b0100135e5bef3715d75f02ff8b);
+            
+        
+
+        marker_f514f28b2125d50c05346ffbd6839d2d.bindPopup(popup_e9a40e38760a8e73131de4a4a7717223)
+        ;
+
+        
+    
+    
+            marker_f514f28b2125d50c05346ffbd6839d2d.bindTooltip(
+                `<div>
+                     Piraeus Port
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_f514f28b2125d50c05346ffbd6839d2d.setIcon(icon_bc9125202cde983d8938d976c5cc8362);
+            
+    
+            feature_group_d36c02da2b5dbcab8fde8150f939927c.addTo(map_4b35e4aa281a3599dd1b34be4ba86e40);
+        
+    
+            var feature_group_aa76975b1418408313ac8af492867014 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_be37747ca2df8809807857f4e0ddf8ee = L.marker(
+                [37.9715, 23.7257],
+                {
+}
+            ).addTo(feature_group_aa76975b1418408313ac8af492867014);
+        
+    
+            var icon_723f83867a35e4a6e5a18d77cea92527 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_95db76eaa61e1b90a7bdbb9daa301bd3 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_d80f42f769b6385f7e37f89417e005ce = $(`<div id="html_d80f42f769b6385f7e37f89417e005ce" style="width: 100.0%; height: 100.0%;"><strong>Acropolis</strong><br>UNESCO-listed hilltop citadel overlooking Athens.</div>`)[0];
+                popup_95db76eaa61e1b90a7bdbb9daa301bd3.setContent(html_d80f42f769b6385f7e37f89417e005ce);
+            
+        
+
+        marker_be37747ca2df8809807857f4e0ddf8ee.bindPopup(popup_95db76eaa61e1b90a7bdbb9daa301bd3)
+        ;
+
+        
+    
+    
+            marker_be37747ca2df8809807857f4e0ddf8ee.bindTooltip(
+                `<div>
+                     Acropolis
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_be37747ca2df8809807857f4e0ddf8ee.setIcon(icon_723f83867a35e4a6e5a18d77cea92527);
+            
+    
+            var marker_64f06e85d9508123126ac1d2ac9f856c = L.marker(
+                [37.9715, 23.7267],
+                {
+}
+            ).addTo(feature_group_aa76975b1418408313ac8af492867014);
+        
+    
+            var icon_470fe8849322e69b78059e37d61a9e77 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9eff5c873690c3205ff7241ec7353d78 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_87758396aa2c3a303890ba1d21f9bd0c = $(`<div id="html_87758396aa2c3a303890ba1d21f9bd0c" style="width: 100.0%; height: 100.0%;"><strong>Parthenon</strong><br>The fifth-century BCE temple dedicated to Athena.</div>`)[0];
+                popup_9eff5c873690c3205ff7241ec7353d78.setContent(html_87758396aa2c3a303890ba1d21f9bd0c);
+            
+        
+
+        marker_64f06e85d9508123126ac1d2ac9f856c.bindPopup(popup_9eff5c873690c3205ff7241ec7353d78)
+        ;
+
+        
+    
+    
+            marker_64f06e85d9508123126ac1d2ac9f856c.bindTooltip(
+                `<div>
+                     Parthenon
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_64f06e85d9508123126ac1d2ac9f856c.setIcon(icon_470fe8849322e69b78059e37d61a9e77);
+            
+    
+            var marker_0b2113a4eb85c5b09a36771fbbf162af = L.marker(
+                [37.9693, 23.7331],
+                {
+}
+            ).addTo(feature_group_aa76975b1418408313ac8af492867014);
+        
+    
+            var icon_51fa46634ff0bedb54922c62780e66f2 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_437e3a28781b88f3b452a0e6e865d855 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_e519d32c3d96d850d1375fd08a9e4878 = $(`<div id="html_e519d32c3d96d850d1375fd08a9e4878" style="width: 100.0%; height: 100.0%;"><strong>Temple of Olympian Zeus</strong><br>Monumental ancient temple near the Acropolis.</div>`)[0];
+                popup_437e3a28781b88f3b452a0e6e865d855.setContent(html_e519d32c3d96d850d1375fd08a9e4878);
+            
+        
+
+        marker_0b2113a4eb85c5b09a36771fbbf162af.bindPopup(popup_437e3a28781b88f3b452a0e6e865d855)
+        ;
+
+        
+    
+    
+            marker_0b2113a4eb85c5b09a36771fbbf162af.bindTooltip(
+                `<div>
+                     Temple of Olympian Zeus
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_0b2113a4eb85c5b09a36771fbbf162af.setIcon(icon_51fa46634ff0bedb54922c62780e66f2);
+            
+    
+            var marker_a6751a90203edf1d29c3e4b76fc8d131 = L.marker(
+                [37.9755, 23.7213],
+                {
+}
+            ).addTo(feature_group_aa76975b1418408313ac8af492867014);
+        
+    
+            var icon_73afc19235a4e5c0ac7993be2a0dc519 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_847814c5040ec1d56e18665d00cfa391 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_435a7ad344314347c208f149a718ce4c = $(`<div id="html_435a7ad344314347c208f149a718ce4c" style="width: 100.0%; height: 100.0%;"><strong>Ancient Agora</strong><br>The civic heart of classical Athens.</div>`)[0];
+                popup_847814c5040ec1d56e18665d00cfa391.setContent(html_435a7ad344314347c208f149a718ce4c);
+            
+        
+
+        marker_a6751a90203edf1d29c3e4b76fc8d131.bindPopup(popup_847814c5040ec1d56e18665d00cfa391)
+        ;
+
+        
+    
+    
+            marker_a6751a90203edf1d29c3e4b76fc8d131.bindTooltip(
+                `<div>
+                     Ancient Agora
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_a6751a90203edf1d29c3e4b76fc8d131.setIcon(icon_73afc19235a4e5c0ac7993be2a0dc519);
+            
+    
+            feature_group_aa76975b1418408313ac8af492867014.addTo(map_4b35e4aa281a3599dd1b34be4ba86e40);
+        
+    
+            var feature_group_f8a56a1c83aebe6e461b4536df3b3414 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var marker_6afb358d7b4a8b359e48f9c785bb5c82 = L.marker(
+                [37.973, 23.7298],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_0ed5f5d36a4966fcca2fba148c2dfe20 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_da236403a707a5d01db67bdbcafd76ed = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_897f219df52ac7ebdf4354d336fc907c = $(`<div id="html_897f219df52ac7ebdf4354d336fc907c" style="width: 100.0%; height: 100.0%;"><strong>Plaka</strong><br>Historic lanes, neoclassical houses, and small tavernas.</div>`)[0];
+                popup_da236403a707a5d01db67bdbcafd76ed.setContent(html_897f219df52ac7ebdf4354d336fc907c);
+            
+        
+
+        marker_6afb358d7b4a8b359e48f9c785bb5c82.bindPopup(popup_da236403a707a5d01db67bdbcafd76ed)
+        ;
+
+        
+    
+    
+            marker_6afb358d7b4a8b359e48f9c785bb5c82.bindTooltip(
+                `<div>
+                     Plaka
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6afb358d7b4a8b359e48f9c785bb5c82.setIcon(icon_0ed5f5d36a4966fcca2fba148c2dfe20);
+            
+    
+            var marker_34d763bc7afe28e6b1bcb35548a1431b = L.marker(
+                [37.9763, 23.7256],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_e271097e9c1967857598e1b4ff0a63ed = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_7a4f8cc72fc83f0a1de36668b2b37e87 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_b25c5ab7d6fa5e7e3f8cdccdfd7d4c62 = $(`<div id="html_b25c5ab7d6fa5e7e3f8cdccdfd7d4c62" style="width: 100.0%; height: 100.0%;"><strong>Monastiraki</strong><br>Market streets and a lively square beneath the Acropolis.</div>`)[0];
+                popup_7a4f8cc72fc83f0a1de36668b2b37e87.setContent(html_b25c5ab7d6fa5e7e3f8cdccdfd7d4c62);
+            
+        
+
+        marker_34d763bc7afe28e6b1bcb35548a1431b.bindPopup(popup_7a4f8cc72fc83f0a1de36668b2b37e87)
+        ;
+
+        
+    
+    
+            marker_34d763bc7afe28e6b1bcb35548a1431b.bindTooltip(
+                `<div>
+                     Monastiraki
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_34d763bc7afe28e6b1bcb35548a1431b.setIcon(icon_e271097e9c1967857598e1b4ff0a63ed);
+            
+    
+            var marker_6f7b3144a3506fe22ab6740d42f99c3f = L.marker(
+                [37.9781, 23.7248],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_9b231544aa895034173cc02f2906671f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e3f6f082281edb4ca8ff0c8525ed9bef = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_67032650c12526a534d1a7bfe0b4f545 = $(`<div id="html_67032650c12526a534d1a7bfe0b4f545" style="width: 100.0%; height: 100.0%;"><strong>Psyrri</strong><br>A compact nightlife and food district.</div>`)[0];
+                popup_e3f6f082281edb4ca8ff0c8525ed9bef.setContent(html_67032650c12526a534d1a7bfe0b4f545);
+            
+        
+
+        marker_6f7b3144a3506fe22ab6740d42f99c3f.bindPopup(popup_e3f6f082281edb4ca8ff0c8525ed9bef)
+        ;
+
+        
+    
+    
+            marker_6f7b3144a3506fe22ab6740d42f99c3f.bindTooltip(
+                `<div>
+                     Psyrri
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_6f7b3144a3506fe22ab6740d42f99c3f.setIcon(icon_9b231544aa895034173cc02f2906671f);
+            
+    
+            var marker_929bd9e341a0bea2c681956112ebcaeb = L.marker(
+                [37.9664, 23.7215],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_2cc31bf7ef71a5ceae1a2259c2916d53 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a626ee95315713976de5bece7cbd5909 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_4bbdb5e3953be700fdaa2421fcff7ec4 = $(`<div id="html_4bbdb5e3953be700fdaa2421fcff7ec4" style="width: 100.0%; height: 100.0%;"><strong>Koukaki</strong><br>A walkable neighborhood south of the Acropolis.</div>`)[0];
+                popup_a626ee95315713976de5bece7cbd5909.setContent(html_4bbdb5e3953be700fdaa2421fcff7ec4);
+            
+        
+
+        marker_929bd9e341a0bea2c681956112ebcaeb.bindPopup(popup_a626ee95315713976de5bece7cbd5909)
+        ;
+
+        
+    
+    
+            marker_929bd9e341a0bea2c681956112ebcaeb.bindTooltip(
+                `<div>
+                     Koukaki
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_929bd9e341a0bea2c681956112ebcaeb.setIcon(icon_2cc31bf7ef71a5ceae1a2259c2916d53);
+            
+    
+            var marker_cbb6075059dd9cabe177ea0cc7ed0ee7 = L.marker(
+                [37.9786, 23.741],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_01e365c81e673aa966f2aa80a95d3a00 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_fe1a3a027278c14ca254dcc8afcbe3ae = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_2817ac8ae8a13cc867f17e3b9015574f = $(`<div id="html_2817ac8ae8a13cc867f17e3b9015574f" style="width: 100.0%; height: 100.0%;"><strong>Kolonaki</strong><br>Central district known for galleries, cafes, and shopping.</div>`)[0];
+                popup_fe1a3a027278c14ca254dcc8afcbe3ae.setContent(html_2817ac8ae8a13cc867f17e3b9015574f);
+            
+        
+
+        marker_cbb6075059dd9cabe177ea0cc7ed0ee7.bindPopup(popup_fe1a3a027278c14ca254dcc8afcbe3ae)
+        ;
+
+        
+    
+    
+            marker_cbb6075059dd9cabe177ea0cc7ed0ee7.bindTooltip(
+                `<div>
+                     Kolonaki
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_cbb6075059dd9cabe177ea0cc7ed0ee7.setIcon(icon_01e365c81e673aa966f2aa80a95d3a00);
+            
+    
+            var marker_ef646103f978b40ff3a66cc32f13ca13 = L.marker(
+                [37.986, 23.7334],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_7d6665724a1e85677551324a09e09b5a = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f60ed4e06ea78db35a45d3ebddcfe983 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_76d27ae7c238ca786fecdfb8703180be = $(`<div id="html_76d27ae7c238ca786fecdfb8703180be" style="width: 100.0%; height: 100.0%;"><strong>Exarcheia</strong><br>Independent bookstores, cafes, and street art.</div>`)[0];
+                popup_f60ed4e06ea78db35a45d3ebddcfe983.setContent(html_76d27ae7c238ca786fecdfb8703180be);
+            
+        
+
+        marker_ef646103f978b40ff3a66cc32f13ca13.bindPopup(popup_f60ed4e06ea78db35a45d3ebddcfe983)
+        ;
+
+        
+    
+    
+            marker_ef646103f978b40ff3a66cc32f13ca13.bindTooltip(
+                `<div>
+                     Exarcheia
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_ef646103f978b40ff3a66cc32f13ca13.setIcon(icon_7d6665724a1e85677551324a09e09b5a);
+            
+    
+            var marker_1b3174c6ee50fc8fab6b22aa025a9d68 = L.marker(
+                [37.9678, 23.75],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_950c9434cc92d88c0eb8b8fe42242ddd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_2544424ce24388b2c8798f28696434f1 = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_9e6debb96b9fe1659c7e87b1704c4045 = $(`<div id="html_9e6debb96b9fe1659c7e87b1704c4045" style="width: 100.0%; height: 100.0%;"><strong>Pangrati</strong><br>Local restaurants, galleries, and neighborhood squares.</div>`)[0];
+                popup_2544424ce24388b2c8798f28696434f1.setContent(html_9e6debb96b9fe1659c7e87b1704c4045);
+            
+        
+
+        marker_1b3174c6ee50fc8fab6b22aa025a9d68.bindPopup(popup_2544424ce24388b2c8798f28696434f1)
+        ;
+
+        
+    
+    
+            marker_1b3174c6ee50fc8fab6b22aa025a9d68.bindTooltip(
+                `<div>
+                     Pangrati
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_1b3174c6ee50fc8fab6b22aa025a9d68.setIcon(icon_950c9434cc92d88c0eb8b8fe42242ddd);
+            
+    
+            var marker_b0a2923452dcedae95dac43eaea95e83 = L.marker(
+                [37.8629, 23.7543],
+                {
+}
+            ).addTo(feature_group_f8a56a1c83aebe6e461b4536df3b3414);
+        
+    
+            var icon_5097c322dff64ba2c87da9936cbf44e9 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "map-marker",
+  "prefix": "fa",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_0067f249f9256ce2e6e3e0e665286ecc = L.popup({
+  "maxWidth": 280,
+});
+
+        
+            
+                var html_582f937d77b56504eacceba0186c81b1 = $(`<div id="html_582f937d77b56504eacceba0186c81b1" style="width: 100.0%; height: 100.0%;"><strong>Glyfada</strong><br>Seaside district on the southern Athens Riviera.</div>`)[0];
+                popup_0067f249f9256ce2e6e3e0e665286ecc.setContent(html_582f937d77b56504eacceba0186c81b1);
+            
+        
+
+        marker_b0a2923452dcedae95dac43eaea95e83.bindPopup(popup_0067f249f9256ce2e6e3e0e665286ecc)
+        ;
+
+        
+    
+    
+            marker_b0a2923452dcedae95dac43eaea95e83.bindTooltip(
+                `<div>
+                     Glyfada
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_b0a2923452dcedae95dac43eaea95e83.setIcon(icon_5097c322dff64ba2c87da9936cbf44e9);
+            
+    
+            feature_group_f8a56a1c83aebe6e461b4536df3b3414.addTo(map_4b35e4aa281a3599dd1b34be4ba86e40);
+        
+    
+            var layer_control_2e939039d685910fe89b9c8534530e02_layers = {
+                base_layers : {
+                    "cartodbpositron" : tile_layer_ffb317a3950a2b55bd133040f628fb34,
+                },
+                overlays :  {
+                    "Landmarks" : feature_group_d36c02da2b5dbcab8fde8150f939927c,
+                    "Wonders" : feature_group_aa76975b1418408313ac8af492867014,
+                    "District places" : feature_group_f8a56a1c83aebe6e461b4536df3b3414,
+                },
+            };
+            let layer_control_2e939039d685910fe89b9c8534530e02 = L.control.layers(
+                layer_control_2e939039d685910fe89b9c8534530e02_layers.base_layers,
+                layer_control_2e939039d685910fe89b9c8534530e02_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": false,
+  "autoZIndex": true,
+}
+            ).addTo(map_4b35e4aa281a3599dd1b34be4ba86e40);
+
+        
+    
+            map_4b35e4aa281a3599dd1b34be4ba86e40.fitBounds(
+                [[37.9755, 23.7348], [37.9686, 23.741], [37.9732, 23.7366], [37.942, 23.6896], [37.9475, 23.638], [37.9715, 23.7257], [37.9715, 23.7267], [37.9693, 23.7331], [37.9755, 23.7213], [37.973, 23.7298], [37.9763, 23.7256], [37.9781, 23.7248], [37.9664, 23.7215], [37.9786, 23.741], [37.986, 23.7334], [37.9678, 23.75], [37.8629, 23.7543]],
+                {"padding": [24, 24]}
+            );
+        
+</script>
+</html>

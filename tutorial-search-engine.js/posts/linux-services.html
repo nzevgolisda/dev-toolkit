@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Linux: Services</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Linux Services & Log Management</h1>
+    
+    <h2>Systemctl Commands</h2>
+    <p>Managing services with systemd:</p>
+    <pre><code># Check service status
+sudo systemctl status nginx
+
+# Start/stop/restart service
+sudo systemctl start nginx
+sudo systemctl stop nginx
+sudo systemctl restart nginx
+
+# Enable/disable service at boot
+sudo systemctl enable nginx
+sudo systemctl disable nginx
+
+# Reload service configuration
+sudo systemctl reload nginx
+
+# List all services
+systemctl list-units --type=service
+
+# List failed services
+systemctl --failed</code></pre>
+
+    <h2>Analyzing Boot Performance</h2>
+    <p>Use <code>systemd-analyze</code> to inspect boot-up performance:</p>
+    <pre><code># Time taken to boot
+systemd-analyze
+
+# Time each service took to start
+systemd-analyze blame
+
+# Critical chain of services
+systemd-analyze critical-chain
+
+# Generate an SVG plot of the boot process
+systemd-analyze plot > boot.svg
+</code></pre>
+
+    <h2>Journald (System Logs)</h2>
+    <p>View and manage system logs with journalctl:</p>
+    <pre><code># View all logs
+sudo journalctl
+
+# Follow logs in real-time
+sudo journalctl -f
+
+# Logs for specific service
+sudo journalctl -u nginx
+
+# Logs since boot
+sudo journalctl -b
+
+# Logs from last hour
+sudo journalctl --since "1 hour ago"
+
+# Logs with priority (err, warning, etc.)
+sudo journalctl -p err
+
+# Output in JSON format
+sudo journalctl -o json-pretty
+
+# Filter by executable
+sudo journalctl /usr/sbin/nginx
+
+# Clear old logs
+sudo journalctl --vacuum-time=7d
+sudo journalctl --vacuum-size=500M</code></pre>
+
+    <h2>Log Rotation (logrotate)</h2>
+    <p><code>logrotate</code> is used to manage log files, including rotation, compression, and removal. Configurations are typically in <code>/etc/logrotate.conf</code> and <code>/etc/logrotate.d/</code>.</p>
+    <pre><code># Example config in /etc/logrotate.d/myapp
+/var/log/myapp/*.log {
+  daily
+  missingok
+  rotate 14
+  compress
+  delaycompress
+  notifempty
+  create 640 myapp myapp
+  sharedscripts
+  postrotate
+    systemctl reload myapp > /dev/null 2>&1 || true
+  endscript
+}
+
+# Force a log rotation
+sudo logrotate -f /etc/logrotate.conf
+</code></pre>
+
+    <h2>User Services</h2>
+    <p>You can run services as a regular user using <code>systemctl --user</code>. Service files are placed in <code>~/.config/systemd/user/</code>.</p>
+    <pre><code># Enable and start a user service
+systemctl --user enable myapp
+systemctl --user start myapp
+
+# To have user services start on boot, you may need to enable lingering for that user
+sudo loginctl enable-linger username
+</code></pre>
+
+    <h2>Creating a Custom Service</h2>
+    <p>Create a systemd service file at <code>/etc/systemd/system/myapp.service</code>:</p>
+    <pre><code>[Unit]
+Description=My Application
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+WorkingDirectory=/opt/myapp
+ExecStart=/usr/bin/python3 /opt/myapp/app.py
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+    <p>Then enable and start:</p>
+    <pre><code>sudo systemctl daemon-reload
+sudo systemctl enable myapp
+sudo systemctl start myapp</code></pre>
+
+    <h2>Process Management</h2>
+    <pre><code># Find process by name
+ps aux | grep nginx
+pgrep nginx
+
+# Kill process
+kill PID
+kill -9 PID  # Force kill
+pkill nginx  # Kill by name
+
+# Check port usage
+sudo netstat -tulpn | grep :80
+sudo ss -tulpn | grep :80
+sudo lsof -i :80</code></pre>
+
+    <h2>Log File Locations</h2>
+    <ul>
+      <li><code>/var/log/syslog</code> - System logs (Debian/Ubuntu)</li>
+      <li><code>/var/log/messages</code> - System logs (RHEL/CentOS)</li>
+      <li><code>/var/log/auth.log</code> - Authentication logs</li>
+      <li><code>/var/log/nginx/</code> - Nginx logs</li>
+      <li><code>/var/log/apache2/</code> - Apache logs</li>
+    </ul>
+
+    <h2>Quick Troubleshooting</h2>
+    <pre><code># Check disk space
+df -h
+
+# Check memory usage
+free -h
+
+# Check system load
+uptime
+top
+htop
+
+# Check service dependencies
+systemctl list-dependencies nginx</code></pre>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Check service status before restarting anything.</li>
+      <li>Read recent logs when a service fails.</li>
+      <li>Confirm configuration syntax before reloads.</li>
+      <li>Change one setting at a time.</li>
+      <li>Document the expected recovery path.</li>
+    </ul>
+  </div>
+</body>
+</html>

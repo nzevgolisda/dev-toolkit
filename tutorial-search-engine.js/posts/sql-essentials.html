@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SQL Essentials</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>SQL Essentials</h1>
+    <p class="post-meta">A compact guide to selecting, joining, and safely changing relational data.</p>
+
+    <h2>Select and Filter</h2>
+    <pre><code>SELECT id, name, created_at
+FROM users
+WHERE active = TRUE
+  AND created_at &gt;= '2026-01-01'
+ORDER BY created_at DESC
+LIMIT 20;</code></pre>
+    <p>Choose only the columns you need. Filter before sorting and limiting so the database can reduce the working set early.</p>
+
+    <h2>Aggregate Results</h2>
+    <pre><code>SELECT department, COUNT(*) AS member_count
+FROM employees
+GROUP BY department
+HAVING COUNT(*) &gt; 3
+ORDER BY member_count DESC;</code></pre>
+    <p><code>WHERE</code> filters rows before grouping. <code>HAVING</code> filters groups after aggregate functions such as <code>COUNT</code> and <code>SUM</code> have run.</p>
+
+    <h2>Join Related Tables</h2>
+    <pre><code>SELECT orders.id, users.email, orders.total
+FROM orders
+JOIN users ON users.id = orders.user_id
+WHERE orders.status = 'paid';</code></pre>
+    <ul>
+      <li>Use an inner <code>JOIN</code> when both records are required.</li>
+      <li>Use <code>LEFT JOIN</code> when the left record should remain without a match.</li>
+      <li>Join on indexed keys and verify the relationship cardinality.</li>
+    </ul>
+
+    <h2>Change Data Safely</h2>
+    <pre><code>BEGIN;
+UPDATE accounts
+SET status = 'inactive'
+WHERE last_seen_at &lt; '2025-01-01';
+
+SELECT status, COUNT(*)
+FROM accounts
+GROUP BY status;
+COMMIT;</code></pre>
+    <p>Run the matching <code>SELECT</code> first, use a narrow <code>WHERE</code> clause, and wrap related changes in a transaction when the database supports it.</p>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Run a select before every data change.</li>
+      <li>Use parameters instead of string-built queries.</li>
+      <li>Inspect query plans for slow operations.</li>
+      <li>Use transactions for related updates.</li>
+      <li>Back up important data before migrations.</li>
+    </ul>
+  </div>
+</body>
+</html>

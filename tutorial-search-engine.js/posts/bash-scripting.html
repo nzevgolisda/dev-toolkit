@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Bash Scripting</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Bash Scripting Guide</h1>
+    
+    <h2>Script Basics</h2>
+    <pre><code>#!/bin/bash
+# This is a comment
+
+# Make script executable:
+# chmod +x script.sh
+
+# Run script:
+# ./script.sh
+
+echo "Hello, World!"</code></pre>
+
+    <h2>Variables</h2>
+    <pre><code># Define variables (no spaces around =)
+name="Alice"
+age=30
+
+# Use variables
+echo "Name: $name"
+echo "Age: ${age}"
+
+# Command substitution
+current_date=$(date)
+files=$(ls)
+
+# Read user input
+read -p "Enter your name: " user_name
+echo "Hello, $user_name"</code></pre>
+
+    <h2>Conditionals</h2>
+    <pre><code># If statement
+if [ "$age" -gt 18 ]; then
+    echo "Adult"
+elif [ "$age" -eq 18 ]; then
+    echo "Just turned adult"
+else
+    echo "Minor"
+fi
+
+# File checks
+if [ -f "file.txt" ]; then
+    echo "File exists"
+fi
+
+if [ -d "directory" ]; then
+    echo "Directory exists"
+fi
+
+# String comparison
+if [ "$name" = "Alice" ]; then
+    echo "Name is Alice"
+fi
+
+# Multiple conditions
+if [ "$age" -gt 18 ] && [ "$name" = "Alice" ]; then
+    echo "Adult named Alice"
+fi</code></pre>
+
+    <h2>Comparison Operators</h2>
+    <ul>
+      <li><code>-eq</code> - Equal to (numbers)</li>
+      <li><code>-ne</code> - Not equal to</li>
+      <li><code>-gt</code> - Greater than</li>
+      <li><code>-lt</code> - Less than</li>
+      <li><code>-ge</code> - Greater than or equal</li>
+      <li><code>-le</code> - Less than or equal</li>
+      <li><code>=</code> - Equal (strings)</li>
+      <li><code>!=</code> - Not equal (strings)</li>
+    </ul>
+
+    <h2>Loops</h2>
+    <pre><code># For loop
+for i in 1 2 3 4 5; do
+    echo "Number: $i"
+done
+
+# For loop with range
+for i in {1..5}; do
+    echo "Count: $i"
+done
+
+# Loop over files
+for file in *.txt; do
+    echo "Processing $file"
+done
+
+# While loop
+counter=0
+while [ $counter -lt 5 ]; do
+    echo "Counter: $counter"
+    ((counter++))
+done
+
+# Until loop
+counter=0
+until [ $counter -ge 5 ]; do
+    echo "Counter: $counter"
+    ((counter++))
+done</code></pre>
+
+    <h2>Functions</h2>
+    <pre><code># Define function
+greet() {
+    echo "Hello, $1!"
+}
+
+# Call function
+greet "Alice"
+
+# Function with return value
+add() {
+    local result=$(($1 + $2))
+    echo $result
+}
+
+sum=$(add 5 3)
+echo "Sum: $sum"
+
+# Function with multiple parameters
+process_file() {
+    local filename=$1
+    local operation=$2
+    echo "Processing $filename with $operation"
+}
+
+process_file "data.txt" "sort"</code></pre>
+
+    <h2>Arrays</h2>
+    <pre><code># Define array
+fruits=("apple" "banana" "orange")
+
+# Access elements
+echo ${fruits[0]}  # apple
+echo ${fruits[1]}  # banana
+
+# All elements
+echo ${fruits[@]}
+
+# Array length
+echo ${#fruits[@]}
+
+# Loop through array
+for fruit in "${fruits[@]}"; do
+    echo "Fruit: $fruit"
+done
+
+# Add to array
+fruits+=("grape")</code></pre>
+
+    <h2>Command Line Arguments</h2>
+    <pre><code>#!/bin/bash
+
+# $0 - Script name
+# $1, $2, ... - Arguments
+# $# - Number of arguments
+# $@ - All arguments
+
+echo "Script name: $0"
+echo "First argument: $1"
+echo "Number of arguments: $#"
+
+# Check if argument provided
+if [ $# -eq 0 ]; then
+    echo "No arguments provided"
+    exit 1
+fi
+
+# Loop through all arguments
+for arg in "$@"; do
+    echo "Argument: $arg"
+done</code></pre>
+
+    <h2>File Operations</h2>
+    <pre><code># Check if file exists
+if [ -f "file.txt" ]; then
+    echo "File exists"
+fi
+
+# Check if directory exists
+if [ -d "mydir" ]; then
+    echo "Directory exists"
+fi
+
+# Create directory
+mkdir -p /path/to/directory
+
+# Read file line by line
+while IFS= read -r line; do
+    echo "Line: $line"
+done < file.txt
+
+# Write to file
+echo "Content" > file.txt    # Overwrite
+echo "More" >> file.txt      # Append</code></pre>
+
+    <h2>Error Handling</h2>
+    <pre><code># Exit on error
+set -e
+
+# Exit on undefined variable
+set -u
+
+# Exit on pipe failure
+set -o pipefail
+
+# Combined
+set -euo pipefail
+
+# Custom error handling
+command || {
+    echo "Command failed"
+    exit 1
+}
+
+# Check exit status
+if ! command; then
+    echo "Command failed"
+    exit 1
+fi</code></pre>
+
+    <h2>Advanced Topics</h2>
+    <h3>Command-line Option Parsing with getopts</h3>
+    <pre><code>#!/bin/bash
+
+# A POSIX variable
+OPTIND=1         # Reset in case getopts has been used previously in the shell.
+
+# Initialize our own variables:
+output_file=""
+verbose=0
+
+while getopts "h?vf:" opt; do
+    case "$opt" in
+    h|\?)
+        echo "Usage: $(basename $0) [-h] [-v] [-f output_file]"
+        exit 0
+        ;;
+    v)  verbose=1
+        ;;
+    f)  output_file=$OPTARG
+        ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+[ "${1:-}" = "--" ] && shift
+
+echo "verbose=${verbose}, output_file='${output_file}', Leftovers: $@"
+
+# And the rest of the script...
+</code></pre>
+
+    <h3>Signal Handling with trap</h3>
+    <pre><code>#!/bin/bash
+
+# Function to be executed when the script is interrupted
+cleanup() {
+    echo "Caught signal... cleaning up."
+    # Add cleanup tasks here
+    rm -f /tmp/myscript.*
+    exit 1
+}
+
+# Trap the INT (Ctrl+C) and TERM signals
+trap cleanup INT TERM
+
+echo "Script is running... Press Ctrl+C to interrupt."
+
+# Simulate a long-running process
+while true; do
+    sleep 1
+done
+</code></pre>
+
+    <h3>Process Substitution</h3>
+    <pre><code># Compare the output of two commands without using temporary files
+diff <(ls -l /) <(ls -l /home)
+</code></pre>
+
+    <h2>Useful Patterns</h2>
+    <h3>Logging</h3>
+    <pre><code>log() {
+    echo "[$(date +'%Y-%m-%d %H:%M:%S')] $*"
+}
+
+log "Starting script"
+log "Processing data"</code></pre>
+
+    <h3>Progress Bar</h3>
+    <pre><code>for i in {1..100}; do
+    echo -ne "\rProgress: $i%"
+    sleep 0.1
+done
+echo ""</code></pre>
+
+    <h3>Confirm Prompt</h3>
+    <pre><code>confirm() {
+    read -p "Are you sure? (y/n) " -n 1 -r
+    echo
+    [[ $REPLY =~ ^[Yy]$ ]]
+}
+
+if confirm; then
+    echo "Confirmed"
+else
+    echo "Cancelled"
+fi</code></pre>
+
+    <h2>Practical Examples</h2>
+    <h3>Simple Backup Script</h3>
+    <pre><code>#!/bin/bash
+set -euo pipefail
+
+SRC_DIR="/path/to/source"
+DEST_DIR="/path/to/backup"
+TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
+BACKUP_FILE="$DEST_DIR/backup-$TIMESTAMP.tar.gz"
+
+echo "Starting backup of $SRC_DIR to $BACKUP_FILE"
+tar -czf "$BACKUP_FILE" "$SRC_DIR"
+echo "Backup complete."</code></pre>
+
+    <h3>System Monitoring Script</h3>
+    <pre><code>#!/bin/bash
+set -euo pipefail
+
+LOG_FILE="/var/log/system-monitor.log"
+
+log() {
+    echo "[$(date)] $1" >> "$LOG_FILE"
+}
+
+check_disk_usage() {
+    log "Checking disk usage..."
+    df -h
+}
+
+check_memory_usage() {
+    log "Checking memory usage..."
+    free -h
+}
+
+log "--- System Monitor Started ---"
+check_disk_usage
+check_memory_usage
+log "--- System Monitor Finished ---"</code></pre>
+
+    <h2>Further Reading</h2>
+    <ul>
+        <li><a href="https://www.gnu.org/software/bash/manual/bash.html" target="_blank" rel="noopener noreferrer">Official Bash Manual</a></li>
+        <li><a href="https://google.github.io/styleguide/shellguide.html" target="_blank" rel="noopener noreferrer">Google Shell Style Guide</a></li>
+        <li><a href="https://wiki.bash-hackers.org/" target="_blank" rel="noopener noreferrer">Bash Hackers Wiki</a></li>
+        <li><a href="https://www.shellcheck.net/" target="_blank" rel="noopener noreferrer">ShellCheck - A static analysis tool for shell scripts</a></li>
+    </ul>
+
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Always quote variables: <code>"$var"</code></li>
+      <li>Use <code>#!/bin/bash</code> shebang</li>
+      <li>Add comments for complex logic</li>
+      <li>Check if commands exist before using</li>
+      <li>Use <code>set -e</code> for error handling</li>
+      <li>Make scripts idempotent when possible</li>
+      <li>Validate input parameters</li>
+    </ul>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Quote variables unless word splitting is intentional.</li>
+            <li>Use strict modes when the script can fail safely.</li>
+            <li>Check command exit codes at important boundaries.</li>
+            <li>Print useful context for failures.</li>
+            <li>Test with empty, spaced, and unexpected inputs.</li>
+        </ul>
+    </div>
+</body>
+</html>

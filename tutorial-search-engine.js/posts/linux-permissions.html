@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Linux Permissions</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Linux File Permissions</h1>
+    
+    <h2>Understanding Permissions</h2>
+    <p>Linux permissions consist of three types for three categories:</p>
+    <pre><code>-rwxr-xr-- 1 user group 1234 Jan 15 12:00 file.txt
+ ^^^^ ^^^ ^^
+ |    |   |__ Other users
+ |    |______ Group
+ |___________ Owner
+
+r = read (4)
+w = write (2)
+x = execute (1)</code></pre>
+
+    <h2>Chmod - Change Permissions</h2>
+    <h3>Numeric Mode</h3>
+    <pre><code># Format: chmod [owner][group][other] file
+
+# Common permissions
+chmod 755 file.sh   # rwxr-xr-x (executable script)
+chmod 644 file.txt  # rw-r--r-- (regular file)
+chmod 600 file.key  # rw------- (private file)
+chmod 777 file      # rwxrwxrwx (full access - avoid!)
+
+# Directory permissions
+chmod 755 directory/  # Standard directory
+chmod 700 directory/  # Private directory</code></pre>
+
+    <h3>Symbolic Mode</h3>
+    <pre><code># Add permissions
+chmod +x script.sh        # Add execute for all
+chmod u+x script.sh       # Add execute for user
+chmod g+w file.txt        # Add write for group
+chmod o+r file.txt        # Add read for others
+
+# Remove permissions
+chmod -x script.sh        # Remove execute for all
+chmod g-w file.txt        # Remove write for group
+
+# Set exact permissions
+chmod u=rwx,g=rx,o=r file.txt
+
+# Multiple changes
+chmod u+x,g-w file.txt</code></pre>
+
+    <h3>Recursive</h3>
+    <pre><code># Apply to directory and all contents
+chmod -R 755 directory/
+
+# Set files to 644, directories to 755
+find /path -type f -exec chmod 644 {} \;
+find /path -type d -exec chmod 755 {} \;</code></pre>
+
+    <h2>Chown - Change Ownership</h2>
+    <pre><code># Change owner
+sudo chown user file.txt
+
+# Change owner and group
+sudo chown user:group file.txt
+
+# Change only group
+sudo chown :group file.txt
+
+# Recursive
+sudo chown -R user:group directory/
+
+# Change group only (alternative)
+sudo chgrp group file.txt</code></pre>
+
+    <h2>Special Permissions</h2>
+    <h3>Setuid (4000)</h3>
+    <pre><code># Run as file owner, not executor
+chmod u+s /path/to/file
+chmod 4755 /path/to/file
+
+# Example: passwd command runs as root
+ls -l /usr/bin/passwd
+# -rwsr-xr-x ... /usr/bin/passwd</code></pre>
+
+    <h3>Setgid (2000)</h3>
+    <pre><code># Run as file's group
+chmod g+s /path/to/file
+chmod 2755 /path/to/file
+
+# On directories: new files inherit group
+chmod g+s /shared/directory</code></pre>
+
+    <h3>Sticky Bit (1000)</h3>
+    <pre><code># Only owner can delete their files
+chmod +t /path/to/directory
+chmod 1777 /path/to/directory
+
+# Example: /tmp directory
+ls -ld /tmp
+# drwxrwxrwt ... /tmp</code></pre>
+
+    <h2>Umask - Default Permissions</h2>
+    <pre><code># View current umask
+umask
+
+# Common umask values
+umask 022  # Files: 644, Directories: 755
+umask 002  # Files: 664, Directories: 775
+umask 077  # Files: 600, Directories: 700
+
+# Set in ~/.bashrc for persistence
+echo "umask 022" >> ~/.bashrc</code></pre>
+
+    <h2>Access Control Lists (ACL)</h2>
+    <pre><code># Check if ACLs are supported
+getfacl file.txt
+
+# Set ACL for specific user
+setfacl -m u:username:rwx file.txt
+
+# Set ACL for specific group
+setfacl -m g:groupname:rx file.txt
+
+# Remove ACL
+setfacl -x u:username file.txt
+
+# Remove all ACLs
+setfacl -b file.txt
+
+# Recursive ACL
+setfacl -R -m u:username:rwx directory/
+
+# Set default ACL for directory
+setfacl -d -m u:username:rwx directory/</code></pre>
+
+    <h2>File Attributes (chattr)</h2>
+    <p>On some filesystems (like ext2/3/4), you can set attributes that control how the file can be modified, beyond the standard permissions.</p>
+    <pre><code># Make a file immutable (cannot be changed, even by root)
+sudo chattr +i /path/to/important_file
+
+# To remove the immutable flag
+sudo chattr -i /path/to/important_file
+
+# Make a file append-only (can only add to it)
+sudo chattr +a /path/to/logfile.log
+
+# List attributes of a file
+lsattr /path/to/file
+</code></pre>
+
+    <h2>Common Scenarios</h2>
+    <h3>Web Server Files</h3>
+    <pre><code># Ownership
+sudo chown -R www-data:www-data /var/www/html
+
+# Permissions
+sudo find /var/www/html -type f -exec chmod 644 {} \;
+sudo find /var/www/html -type d -exec chmod 755 {} \;</code></pre>
+
+    <h3>SSH Keys</h3>
+    <pre><code># Private key must be secure
+chmod 600 ~/.ssh/id_rsa
+
+# Public key
+chmod 644 ~/.ssh/id_rsa.pub
+
+# SSH directory
+chmod 700 ~/.ssh
+
+# authorized_keys
+chmod 600 ~/.ssh/authorized_keys</code></pre>
+
+    <h3>Scripts</h3>
+    <pre><code># Make script executable
+chmod +x script.sh
+
+# Owner can run, others can't
+chmod 700 script.sh
+
+# Everyone can run
+chmod 755 script.sh</code></pre>
+
+    <h2>Finding Files by Permission</h2>
+    <pre><code># Find files with specific permission
+find /path -type f -perm 777
+
+# Find SUID files
+find / -perm -4000 2>/dev/null
+
+# Find files writable by others
+find /path -perm -002
+
+# Find files owned by user
+find /path -user username
+
+# Find files owned by group
+find /path -group groupname</code></pre>
+
+    <h2>Permission Calculation</h2>
+    <pre><code>Read    (r) = 4
+Write   (w) = 2
+Execute (x) = 1
+
+Examples:
+7 = 4+2+1 = rwx
+6 = 4+2   = rw-
+5 = 4+1   = r-x
+4 = 4     = r--
+3 = 2+1   = -wx
+2 = 2     = -w-
+1 = 1     = --x
+0 = 0     = ---</code></pre>
+
+    <h2>Quick Reference</h2>
+    <ul>
+      <li><code>644</code> - Regular files (rw-r--r--)</li>
+      <li><code>755</code> - Executables/directories (rwxr-xr-x)</li>
+      <li><code>600</code> - Private files (rw-------)</li>
+      <li><code>700</code> - Private executables (rwx------)</li>
+      <li><code>777</code> - Full access - avoid! (rwxrwxrwx)</li>
+    </ul>
+
+    <h2>A Note on SELinux and AppArmor</h2>
+    <p>If you've set the correct permissions and still can't access a file, it might be due to a Mandatory Access Control (MAC) system like SELinux (on RHEL/CentOS/Fedora) or AppArmor (on Debian/Ubuntu/SUSE). These systems provide an additional layer of security that can override traditional file permissions. Use `sestatus` or `aa-status` to check their status.</p>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Inspect ownership before changing permissions.</li>
+            <li>Grant the smallest access that solves the task.</li>
+            <li>Prefer groups over repeated individual grants.</li>
+            <li>Test access as the real operating-system user.</li>
+            <li>Recheck permissions after deployment.</li>
+        </ul>
+    </div>
+</body>
+</html>

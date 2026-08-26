@@ -1,0 +1,61 @@
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="A responsive product slideshow with descriptions and controls.">
+        <title>Product Gallery</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <div class="topnav">
+            <a class="brand" href="#home">Object Archive</a>
+            <nav aria-label="Main navigation">
+                <a class="active" href="#home">Gallery</a>
+                <a href="#details">Details</a>
+            </nav>
+        </div>
+        <main id="home" class="page-shell">
+            <header class="intro">
+                <p class="eyebrow">Curated visual study</p>
+                <h1>Objects in sequence.</h1>
+                <p>Browse the collection one frame at a time. Pause, inspect, and move at your own pace.</p>
+            </header>
+            <section class="gallery" aria-label="Product gallery">
+                <div class="stage">
+                    <button id="previous" class="nav-button previous" type="button" aria-label="Previous slide" title="Previous slide">&#8592;</button>
+                    <figure class="slide-frame">
+                        <img id="slide-image" alt="" width="900" height="600">
+                        <figcaption>
+                            <span id="slide-number" class="slide-number">01 / 05</span>
+                            <h2 id="slide-title"></h2>
+                            <p id="slide-description"></p>
+                            <strong id="slide-price"></strong>
+                        </figcaption>
+                    </figure>
+                    <button id="next" class="nav-button next" type="button" aria-label="Next slide" title="Next slide">&#8594;</button>
+                </div>
+                <div class="gallery-toolbar">
+                    <button id="play-toggle" class="control-button" type="button" aria-pressed="true" title="Pause slideshow"><span aria-hidden="true">&#10074;&#10074;</span> Pause</button>
+                    <button id="reset" class="control-button secondary" type="button" title="Return to first slide"><span aria-hidden="true">&#8634;</span> Reset</button>
+                    <div id="dots" class="dots" aria-label="Choose a slide"></div>
+                    <span id="status" class="status" aria-live="polite">Playing</span>
+                </div>
+                <div class="thumbnail-row">
+                    <div id="thumbnails" class="thumbnails" aria-label="Slide thumbnails"></div>
+                    <button id="fullscreen" class="icon-button" type="button" aria-label="Open gallery fullscreen" title="Open fullscreen">&#10530;</button>
+                </div>
+            </section>
+            <section id="details" class="details">
+                <p class="eyebrow">About the gallery</p>
+                <h2>A quieter way to compare.</h2>
+                <p>Each frame pairs an image with a short note and price. Use the arrow keys or the controls to move through the collection.</p>
+            </section>
+        </main>
+        <script src="./main.js"></script>
+    </body>
+</html>

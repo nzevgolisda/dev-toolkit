@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Docker Cheatsheet</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Docker Cheatsheet</h1>
+
+    <h2>General Commands</h2>
+    <pre><code>
+docker --version
+docker info
+docker login
+docker logout
+    </code></pre>
+
+    <h2>Image Management</h2>
+    <pre><code>
+docker build -t &lt;image_name&gt; .
+docker pull &lt;image_name&gt;
+docker push &lt;username&gt;/&lt;image_name&gt;
+docker images
+docker rmi &lt;image_name_or_id&gt;
+docker search &lt;term&gt;
+    </code></pre>
+
+    <h2>Container Management</h2>
+    <pre><code>
+docker run &lt;image_name&gt;
+docker ps
+docker ps -a
+docker start &lt;container_name_or_id&gt;
+docker stop &lt;container_name_or_id&gt;
+docker restart &lt;container_name_or_id&gt;
+docker kill &lt;container_name_or_id&gt;
+docker exec -it &lt;container_name_or_id&gt; &lt;command&gt;
+docker logs &lt;container_name_or_id&gt;
+docker inspect &lt;container_name_or_id&gt;
+docker rm &lt;container_name_or_id&gt;
+docker cp &lt;source_path&gt; &lt;container_name&gt;:&lt;destination_path&gt;
+docker cp &lt;container_name&gt;:&lt;source_path&gt; &lt;destination_path&gt;
+    </code></pre>
+
+    <h2>Docker Compose</h2>
+    <pre><code>
+docker compose up
+docker compose down
+docker compose ps
+docker compose build
+docker compose exec &lt;service_name&gt; &lt;command&gt;
+docker compose logs &lt;service_name&gt;
+docker compose restart &lt;service_name&gt;
+docker compose stop &lt;service_name&gt;
+    </code></pre>
+
+    <h2>Volume Management</h2>
+    <pre><code>
+docker volume create &lt;volume_name&gt;
+docker volume ls
+docker volume rm &lt;volume_name&gt;
+docker volume prune
+    </code></pre>
+
+    <h2>Network Management</h2>
+    <pre><code>
+docker network create &lt;network_name&gt;
+docker network ls
+docker network rm &lt;network_name&gt;
+docker network prune
+    </code></pre>
+
+    <h2>Cleanup</h2>
+    <pre><code>
+docker system prune
+docker system prune -a
+docker image prune
+docker image prune -a
+docker container prune
+    </code></pre>
+        <h2>Practice Checklist</h2>
+        <ul>
+            <li>Use a small base image when compatibility allows.</li>
+            <li>Pin important image and dependency versions.</li>
+            <li>Inspect logs before restarting a container.</li>
+            <li>Keep secrets outside images and compose files.</li>
+            <li>Remove unused resources after experiments.</li>
+        </ul>
+    </div>
+</body>
+</html>

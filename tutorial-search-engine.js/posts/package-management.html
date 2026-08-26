@@ -1,0 +1,523 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Package Management</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+  <div class="container content-page">
+    <a href="../index.html" class="back-link">← Back to Home</a>
+    <h1>Package Management: apt & winget</h1>
+    
+    <h2>apt (Debian/Ubuntu)</h2>
+    <h3>Basic Commands</h3>
+    <pre><code># Update package list
+sudo apt update
+
+# Upgrade all packages
+sudo apt upgrade
+
+# Upgrade with package removals if needed
+sudo apt full-upgrade
+
+# Install package
+sudo apt install package-name
+sudo apt install package1 package2 package3
+
+# Install specific version
+sudo apt install package=version
+
+# Remove package (keep config files)
+sudo apt remove package-name
+
+# Remove package and config files
+sudo apt purge package-name
+
+# Remove unused dependencies
+sudo apt autoremove
+
+# Clean package cache
+sudo apt clean
+sudo apt autoclean</code></pre>
+
+    <h3>Search and Information</h3>
+    <pre><code># Search for packages
+apt search keyword
+apt search "exact phrase"
+
+# Show package information
+apt show package-name
+
+# List installed packages
+apt list --installed
+
+# List upgradable packages
+apt list --upgradable
+
+# Check which package provides a file
+apt-file search /path/to/file
+dpkg -S /path/to/file
+
+# Show package dependencies
+apt depends package-name
+
+# Show reverse dependencies
+apt rdepends package-name</code></pre>
+
+    <h3>Package Management</h3>
+    <pre><code># Download package without installing
+apt download package-name
+
+# Install local .deb file
+sudo apt install ./package.deb
+sudo dpkg -i package.deb
+
+# Fix broken dependencies
+sudo apt --fix-broken install
+
+# Reconfigure package
+sudo dpkg-reconfigure package-name
+
+# Hold package (prevent upgrades)
+sudo apt-mark hold package-name
+
+# Unhold package
+sudo apt-mark unhold package-name
+
+# List held packages
+apt-mark showhold</code></pre>
+
+    <h3>Repository Management</h3>
+    <pre><code># Add repository (Ubuntu)
+sudo add-apt-repository ppa:owner/repo-name
+sudo apt update
+
+# Remove repository
+sudo add-apt-repository --remove ppa:owner/repo-name
+
+# List repositories
+cat /etc/apt/sources.list
+ls /etc/apt/sources.list.d/
+
+# Add GPG key
+wget -qO - https://example.com/key.gpg | sudo apt-key add -
+
+# Or with new method
+wget -qO - https://example.com/key.gpg | sudo gpg --dearmor -o /usr/share/keyrings/example.gpg</code></pre>
+
+    <h3>Common Tasks</h3>
+    <pre><code># Update and upgrade system
+sudo apt update && sudo apt upgrade -y
+
+# Install build essentials
+sudo apt install build-essential
+
+# Install development tools
+sudo apt install git curl wget vim
+
+# Install web server stack
+sudo apt install nginx mysql-server php-fpm
+
+# Install Python development
+sudo apt install python3 python3-pip python3-venv
+
+# Install Node.js (via NodeSource)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install nodejs</code></pre>
+
+    <h3>Troubleshooting</h3>
+    <pre><code># Fix broken packages
+sudo apt --fix-broken install
+sudo dpkg --configure -a
+
+# Clear cache and retry
+sudo apt clean
+sudo apt update
+
+# Resolve lock errors
+sudo rm /var/lib/apt/lists/lock
+sudo rm /var/cache/apt/archives/lock
+sudo rm /var/lib/dpkg/lock*
+sudo dpkg --configure -a
+
+# Check for held packages
+apt-mark showhold
+
+# Verify package integrity
+sudo apt-get check</code></pre>
+
+    <h2>yum/dnf (RHEL/CentOS/Fedora)</h2>
+    <p><code>dnf</code> is the modern replacement for <code>yum</code>. Commands are mostly interchangeable.</p>
+    <h3>Basic Commands</h3>
+    <pre><code># Update all packages
+sudo dnf check-update
+sudo dnf upgrade
+
+# Install package
+sudo dnf install package-name
+
+# Remove package
+sudo dnf remove package-name
+
+# Clean up
+sudo dnf autoremove
+sudo dnf clean all
+</code></pre>
+    <h3>Search and Information</h3>
+    <pre><code># Search for a package
+sudo dnf search keyword
+
+# Show package info
+dnf info package-name
+
+# List installed packages
+dnf list installed
+</code></pre>
+
+    <h2>pacman (Arch Linux)</h2>
+    <h3>Basic Commands</h3>
+    <pre><code># Sync package databases and upgrade
+sudo pacman -Syu
+
+# Install package
+sudo pacman -S package-name
+
+# Remove package
+sudo pacman -R package-name
+
+# Remove package and dependencies
+sudo pacman -Rs package-name
+
+# Clean cache
+sudo pacman -Scc
+</code></pre>
+    <h3>Search and Information</h3>
+    <pre><code># Search for a package
+pacman -Ss keyword
+
+# Show package info
+pacman -Si package-name
+
+# List installed packages
+pacman -Q
+</code></pre>
+
+    <h2>Homebrew (macOS/Linux)</h2>
+    <h3>Basic Commands</h3>
+    <pre><code># Update Homebrew and formulae
+brew update
+
+# Upgrade all packages
+brew upgrade
+
+# Install package (formula)
+brew install package-name
+
+# Install application (cask)
+brew install --cask application-name
+
+# Uninstall package
+brew uninstall package-name
+
+# Clean up old versions
+brew cleanup
+</code></pre>
+    <h3>Search and Information</h3>
+    <pre><code># Search for a formula or cask
+brew search text
+
+# Show package info
+brew info package-name
+
+# List installed packages
+brew list
+</code></pre>
+
+    <h2>winget (Windows)</h2>
+    <h3>Basic Commands</h3>
+    <pre><code># Search for packages
+winget search "package name"
+winget search --name "exact name"
+
+# Show package information
+winget show package-id
+
+# Install package
+winget install package-id
+winget install Microsoft.PowerShell
+
+# Install with specific version
+winget install package-id --version 1.2.3
+
+# Install multiple packages
+winget install package1 package2 package3
+
+# Install interactively
+winget install package-id --interactive
+
+# Uninstall package
+winget uninstall package-id
+
+# Upgrade specific package
+winget upgrade package-id
+
+# Upgrade all packages
+winget upgrade --all</code></pre>
+
+    <h3>List and Search</h3>
+    <pre><code># List installed packages
+winget list
+
+# List installed packages from winget source
+winget list --source winget
+
+# Search by name
+winget search "Visual Studio Code"
+
+# Search by ID
+winget search --id Microsoft.VisualStudioCode
+
+# Show package details
+winget show Microsoft.VisualStudioCode
+
+# List available versions
+winget show package-id --versions</code></pre>
+
+    <h3>Package Management</h3>
+    <pre><code># Upgrade all packages
+winget upgrade --all
+
+# Upgrade with auto-accept
+winget upgrade --all --accept-package-agreements --accept-source-agreements
+
+# Export installed packages
+winget export -o packages.json
+
+# Import packages
+winget import -i packages.json
+
+# Download package without installing
+winget download package-id
+
+# Install with custom location
+winget install package-id --location "C:\Custom\Path"</code></pre>
+
+    <h3>Common Software Installations</h3>
+    <pre><code># Development tools
+winget install Microsoft.VisualStudioCode
+winget install Git.Git
+winget install Microsoft.PowerShell
+winget install Microsoft.WindowsTerminal
+winget install Python.Python.3.12
+winget install OpenJS.NodeJS.LTS
+
+# Browsers
+winget install Google.Chrome
+winget install Mozilla.Firefox
+winget install Microsoft.Edge
+
+# Utilities
+winget install 7zip.7zip
+winget install VideoLAN.VLC
+winget install Adobe.Acrobat.Reader.64-bit
+
+# Communication
+winget install Microsoft.Teams
+winget install SlackTechnologies.Slack
+winget install Zoom.Zoom
+
+# Docker
+winget install Docker.DockerDesktop</code></pre>
+
+    <h3>Configuration</h3>
+    <pre><code># Open settings
+winget settings
+
+# Example settings.json
+{
+  "experimentalFeatures": {
+    "experimentalCmd": true,
+    "experimentalArg": true
+  },
+  "installBehavior": {
+    "preferences": {
+      "scope": "user"
+    }
+  },
+  "source": {
+    "autoUpdateIntervalInMinutes": 5
+  }
+}</code></pre>
+
+    <h3>Package Manifest</h3>
+    <p>Export installed packages to reinstall on new machine:</p>
+    <pre><code># Export to JSON
+winget export -o installed-packages.json
+
+# Import on new machine
+winget import -i installed-packages.json --accept-package-agreements --accept-source-agreements
+
+# Example JSON structure
+{
+  "Sources": [
+    {
+      "Packages": [
+        {
+          "PackageIdentifier": "Microsoft.VisualStudioCode"
+        },
+        {
+          "PackageIdentifier": "Git.Git"
+        }
+      ],
+      "SourceDetails": {
+        "Name": "winget"
+      }
+    }
+  ]
+}</code></pre>
+
+    <h3>Troubleshooting</h3>
+    <pre><code># Update winget sources
+winget source update
+
+# List sources
+winget source list
+
+# Reset sources
+winget source reset --force
+
+# Check for updates to winget itself
+# winget updates via Microsoft Store
+
+# Verbose output for debugging
+winget install package-id --verbose
+
+# Check available upgrades
+winget upgrade
+
+# Fix common issues by resetting
+winget source reset winget</code></pre>
+
+    <h2>Comparison of Package Managers</h2>
+    <table>
+      <tr>
+        <th>Task</th>
+        <th>apt (Debian)</th>
+        <th>dnf/yum (RHEL)</th>
+        <th>pacman (Arch)</th>
+        <th>brew (macOS)</th>
+        <th>winget (Windows)</th>
+      </tr>
+      <tr>
+        <td>Update Repos</td>
+        <td><code>sudo apt update</code></td>
+        <td><code>sudo dnf check-update</code></td>
+        <td><code>sudo pacman -Sy</code></td>
+        <td><code>brew update</code></td>
+        <td><code>winget source update</code></td>
+      </tr>
+      <tr>
+        <td>Upgrade All</td>
+        <td><code>sudo apt upgrade</code></td>
+        <td><code>sudo dnf upgrade</code></td>
+        <td><code>sudo pacman -Syu</code></td>
+        <td><code>brew upgrade</code></td>
+        <td><code>winget upgrade --all</code></td>
+      </tr>
+      <tr>
+        <td>Search</td>
+        <td><code>apt search name</code></td>
+        <td><code>dnf search name</code></td>
+        <td><code>pacman -Ss name</code></td>
+        <td><code>brew search name</code></td>
+        <td><code>winget search name</code></td>
+      </tr>
+      <tr>
+        <td>Install</td>
+        <td><code>sudo apt install pkg</code></td>
+        <td><code>sudo dnf install pkg</code></td>
+        <td><code>sudo pacman -S pkg</code></td>
+        <td><code>brew install pkg</code></td>
+        <td><code>winget install pkg</code></td>
+      </tr>
+      <tr>
+        <td>Remove</td>
+        <td><code>sudo apt remove pkg</code></td>
+        <td><code>sudo dnf remove pkg</code></td>
+        <td><code>sudo pacman -R pkg</code></td>
+        <td><code>brew uninstall pkg</code></td>
+        <td><code>winget uninstall pkg</code></td>
+      </tr>
+      <tr>
+        <td>List Installed</td>
+        <td><code>apt list --installed</code></td>
+        <td><code>dnf list installed</code></td>
+        <td><code>pacman -Q</code></td>
+        <td><code>brew list</code></td>
+        <td><code>winget list</code></td>
+      </tr>
+      <tr>
+        <td>Show Info</td>
+        <td><code>apt show pkg</code></td>
+        <td><code>dnf info pkg</code></td>
+        <td><code>pacman -Si pkg</code></td>
+        <td><code>brew info pkg</code></td>
+        <td><code>winget show pkg</code></td>
+      </tr>
+    </table>
+
+    <h2>Common Workflows</h2>
+    <h3>Fresh Linux Setup</h3>
+    <pre><code># Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install essentials
+sudo apt install -y build-essential git curl wget vim
+
+# Install development tools
+sudo apt install -y python3 python3-pip python3-venv
+sudo apt install -y nodejs npm
+
+# Clean up
+sudo apt autoremove -y</code></pre>
+
+    <h3>Fresh Windows Setup</h3>
+    <pre><code># Update winget
+winget source update
+
+# Install development tools
+winget install Microsoft.VisualStudioCode
+winget install Git.Git
+winget install Microsoft.WindowsTerminal
+winget install Microsoft.PowerShell
+winget install Python.Python.3.12
+winget install OpenJS.NodeJS.LTS
+
+# Install utilities
+winget install 7zip.7zip
+winget install Google.Chrome</code></pre>
+
+    <h2>Best Practices</h2>
+    <ul>
+      <li>Always update package list before installing (apt update)</li>
+      <li>Regularly upgrade packages for security updates</li>
+      <li>Use autoremove to clean up unused dependencies</li>
+      <li>Export package lists before major system changes</li>
+      <li>Read package descriptions before installing</li>
+      <li>Use specific package IDs with winget for accuracy</li>
+      <li>Check package authenticity and sources</li>
+      <li>Keep a list of critical packages for quick reinstall</li>
+    </ul>
+    <h2>Practice Checklist</h2>
+    <ul>
+      <li>Refresh package metadata before installing.</li>
+      <li>Review dependencies and available versions.</li>
+      <li>Prefer signed packages from trusted repositories.</li>
+      <li>Remove unused packages after testing.</li>
+      <li>Record system changes for future maintenance.</li>
+    </ul>
+  </div>
+</body>
+</html>
